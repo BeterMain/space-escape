@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dvcu8bx7pitei"]
+
+[ext_resource type="Texture2D" uid="uid://c6u0vj21t857t" path="res://Imports/Ship/player_ship_0.png" id="1_mvdvx"]
+
+[resource]
+resource_name = "material_0"
+transparency = 2
+alpha_scissor_threshold = 0.05
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("1_mvdvx")
+texture_filter = 0
+texture_repeat = false

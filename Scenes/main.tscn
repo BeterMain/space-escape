@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvdv4larwc17o"]
+
+[ext_resource type="PackedScene" uid="uid://bib7mjunjxiyu" path="res://UI/scene_manager.tscn" id="2_67vsg"]
+[ext_resource type="PackedScene" uid="uid://huaeiq7sqrf" path="res://Scenes/main_menu.tscn" id="2_v5y2u"]
+
+[node name="Main" type="Node3D"]
+
+[node name="SceneChanger" parent="." instance=ExtResource("2_67vsg")]
+
+[node name="MainMenu" parent="." instance=ExtResource("2_v5y2u")]

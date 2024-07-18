@@ -1,0 +1,470 @@
+[gd_scene load_steps=21 format=3 uid="uid://bsv73wh3nrv21"]
+
+[ext_resource type="Script" path="res://Scenes/upgrade_screen.gd" id="1_jqj8d"]
+[ext_resource type="PackedScene" uid="uid://dgqsn6rnymrcx" path="res://Levels/events_manager.tscn" id="3_2i6k4"]
+[ext_resource type="PackedScene" uid="uid://dkh6kcnqlesuq" path="res://Imports/Ship/player_ship.gltf" id="3_6ydrv"]
+[ext_resource type="PackedScene" uid="uid://bpe5luvm6v45x" path="res://UI/debug_ui.tscn" id="3_apeeu"]
+[ext_resource type="AudioStream" uid="uid://c6020vyqi5lt4" path="res://Audio/BGM/Upgrade_Screen.wav" id="3_tsiih"]
+[ext_resource type="Theme" uid="uid://dmt2060hchuxn" path="res://Scenes/upgrade_text.tres" id="4_64see"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j2uo2"]
+albedo_color = Color(0, 0, 0, 1)
+roughness = 0.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_idm23"]
+material = SubResource("StandardMaterial3D_j2uo2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ng1vo"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_lgqw6"]
+material = SubResource("StandardMaterial3D_ng1vo")
+radius = 0.25
+height = 0.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gr1xs"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wgm17"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_r74he"]
+color = Color(1, 1, 1, 1)
+grow_begin = 3.0
+grow_end = 3.0
+thickness = 2
+vertical = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t6jdi"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_tf26e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewportContainer/SubViewport/blockbench_export2:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.468554, 2.06788, 0.432307)]
+}
+
+[sub_resource type="Animation" id="Animation_scrqx"]
+resource_name = "rotate"
+length = 6.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewportContainer/SubViewport/blockbench_export2:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.468554, 2.06788, 0.432307), Vector3(-0.467748, -4.18879, 0.432842)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_aqvkd"]
+_data = {
+"RESET": SubResource("Animation_tf26e"),
+"rotate": SubResource("Animation_scrqx")
+}
+
+[sub_resource type="Animation" id="Animation_nwark"]
+resource_name = "obtained_blaster"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI/UpgradePanel/CenterContainer/Upgrades/BlasterUpgrade/BlasterCostTxt:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 1.1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.294118, 0.501961, 0.709804, 1), Color(0.905882, 0, 0.215686, 1), Color(0.603922, 0, 0.760784, 1), Color(0.294118, 0.501961, 0.709804, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_u7dux"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI/UpgradePanel/CenterContainer/Upgrades/BlasterUpgrade/BlasterCostTxt:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.294118, 0.501961, 0.709804, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rmsi7"]
+_data = {
+"RESET": SubResource("Animation_u7dux"),
+"obtained_blaster": SubResource("Animation_nwark")
+}
+
+[node name="UpgradeScreen" type="Node3D"]
+script = ExtResource("1_jqj8d")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 5
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(384, 216)
+size_2d_override = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(0.973187, 0.0854094, -0.213571, -1.32137e-08, 0.928505, 0.371319, 0.230016, -0.361363, 0.903609, 2.84894, 1.47997, 0.328472)
+light_volumetric_fog_energy = 0.0
+sky_mode = 1
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(0.798023, -0.234543, -0.555112, -0.190366, -0.972099, 0.137057, -0.571769, -0.00370057, -0.820406, 2.84894, 1.47997, -0.5743)
+light_volumetric_fog_energy = 0.0
+sky_mode = 1
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.141599)
+
+[node name="blockbench_export2" parent="SubViewportContainer/SubViewport" instance=ExtResource("3_6ydrv")]
+transform = Transform3D(-0.599299, -0.160635, 0.784243, 0.373811, 0.810139, 0.451597, -0.707888, 0.5638, -0.425469, 1.27332, -0.213774, -1.99125)
+
+[node name="BG" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(5.81734, 0, 0, 0, -4.37114e-08, -2.3095, 0, 1, -1.00952e-07, 0.991076, 0, -2.54468)
+mesh = SubResource("PlaneMesh_idm23")
+skeleton = NodePath("../../..")
+
+[node name="Particles" type="CPUParticles3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.02046, 0, -2.68298)
+emitting = false
+amount = 20
+lifetime = 3.07
+preprocess = 1.22
+speed_scale = 0.5
+local_coords = true
+mesh = SubResource("SphereMesh_lgqw6")
+emission_shape = 3
+emission_box_extents = Vector3(1, 1.2, 0)
+direction = Vector3(-1, 0, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 4.0
+scale_amount_min = 0.5
+scale_amount_max = 0.75
+
+[node name="EventsManager" parent="SubViewportContainer/SubViewport" instance=ExtResource("3_2i6k4")]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="DebugUI" parent="UI" instance=ExtResource("3_apeeu")]
+
+[node name="UpgradePanel" type="Panel" parent="UI"]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 934.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gr1xs")
+
+[node name="CenterContainer" type="CenterContainer" parent="UI/UpgradePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Upgrades" type="VBoxContainer" parent="UI/UpgradePanel/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 70
+
+[node name="UpgradeTitleTxt" type="Label" parent="UI/UpgradePanel/CenterContainer/Upgrades"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.294118, 0.501961, 0.709804, 1)
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 4
+theme_override_font_sizes/font_size = 90
+text = "Upgrades"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BubbleUpgrade" type="HBoxContainer" parent="UI/UpgradePanel/CenterContainer/Upgrades"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="BubbleTxt" type="Label" parent="UI/UpgradePanel/CenterContainer/Upgrades/BubbleUpgrade"]
+layout_mode = 2
+theme = ExtResource("4_64see")
+theme_override_font_sizes/font_size = 45
+text = "Bubble Shield lvl 0"
+
+[node name="BubbleCostTxt" type="Label" parent="UI/UpgradePanel/CenterContainer/Upgrades/BubbleUpgrade"]
+layout_mode = 2
+theme = ExtResource("4_64see")
+theme_override_font_sizes/font_size = 45
+text = "$000"
+
+[node name="BubbleBtn" type="Button" parent="UI/UpgradePanel/CenterContainer/Upgrades/BubbleUpgrade"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../DistanceUpgrade/DistanceBtn")
+focus_neighbor_top = NodePath("../../../../../RestartPanel/HBoxContainer/ContinueBtn")
+focus_neighbor_right = NodePath("../../../../../RestartPanel/HBoxContainer/ContinueBtn")
+focus_neighbor_bottom = NodePath("../../DistanceUpgrade/DistanceBtn")
+theme_override_font_sizes/font_size = 50
+text = "+"
+
+[node name="DistanceUpgrade" type="HBoxContainer" parent="UI/UpgradePanel/CenterContainer/Upgrades"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="DistanceTxt" type="Label" parent="UI/UpgradePanel/CenterContainer/Upgrades/DistanceUpgrade"]
+layout_mode = 2
+theme = ExtResource("4_64see")
+theme_override_font_sizes/font_size = 45
+text = "Distance Boost lvl 0"
+
+[node name="DistanceCostTxt" type="Label" parent="UI/UpgradePanel/CenterContainer/Upgrades/DistanceUpgrade"]
+layout_mode = 2
+theme = ExtResource("4_64see")
+theme_override_font_sizes/font_size = 45
+text = "$000"
+
+[node name="DistanceBtn" type="Button" parent="UI/UpgradePanel/CenterContainer/Upgrades/DistanceUpgrade"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../HealthUpgrade/HealthBtn")
+focus_neighbor_top = NodePath("../../BubbleUpgrade/BubbleBtn")
+focus_neighbor_right = NodePath("../../../../../RestartPanel/HBoxContainer/ContinueBtn")
+focus_neighbor_bottom = NodePath("../../HealthUpgrade/HealthBtn")
+theme_override_font_sizes/font_size = 50
+text = "+"
+
+[node name="HealthUpgrade" type="HBoxContainer" parent="UI/UpgradePanel/CenterContainer/Upgrades"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="HealthTxt" type="Label" parent="UI/UpgradePanel/CenterContainer/Upgrades/HealthUpgrade"]
+layout_mode = 2
+theme = ExtResource("4_64see")
+theme_override_font_sizes/font_size = 45
+text = "Health lvl 0"
+
+[node name="HealthCostTxt" type="Label" parent="UI/UpgradePanel/CenterContainer/Upgrades/HealthUpgrade"]
+layout_mode = 2
+theme = ExtResource("4_64see")
+theme_override_font_sizes/font_size = 45
+text = "$000"
+
+[node name="HealthBtn" type="Button" parent="UI/UpgradePanel/CenterContainer/Upgrades/HealthUpgrade"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../BoostUpgrade/BoostBtn")
+focus_neighbor_top = NodePath("../../DistanceUpgrade/DistanceBtn")
+focus_neighbor_right = NodePath("../../../../../RestartPanel/HBoxContainer/ContinueBtn")
+focus_neighbor_bottom = NodePath("../../BoostUpgrade/BoostBtn")
+theme_override_font_sizes/font_size = 50
+text = "+"
+
+[node name="BoostUpgrade" type="HBoxContainer" parent="UI/UpgradePanel/CenterContainer/Upgrades"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="BoostTxt" type="Label" parent="UI/UpgradePanel/CenterContainer/Upgrades/BoostUpgrade"]
+layout_mode = 2
+theme = ExtResource("4_64see")
+theme_override_font_sizes/font_size = 45
+text = "Boost Gauge lvl 0"
+
+[node name="BoostCostTxt" type="Label" parent="UI/UpgradePanel/CenterContainer/Upgrades/BoostUpgrade"]
+layout_mode = 2
+theme = ExtResource("4_64see")
+theme_override_font_sizes/font_size = 45
+text = "$000"
+
+[node name="BoostBtn" type="Button" parent="UI/UpgradePanel/CenterContainer/Upgrades/BoostUpgrade"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../../../../RestartPanel/HBoxContainer/MainMenuBtn")
+focus_neighbor_top = NodePath("../../HealthUpgrade/HealthBtn")
+focus_neighbor_right = NodePath("../../../../../RestartPanel/HBoxContainer/ContinueBtn")
+focus_neighbor_bottom = NodePath("../../../../../RestartPanel/HBoxContainer/MainMenuBtn")
+theme_override_font_sizes/font_size = 50
+text = "+"
+
+[node name="BlasterUpgrade" type="HBoxContainer" parent="UI/UpgradePanel/CenterContainer/Upgrades"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="BlasterTxt" type="Label" parent="UI/UpgradePanel/CenterContainer/Upgrades/BlasterUpgrade"]
+layout_mode = 2
+theme = ExtResource("4_64see")
+theme_override_font_sizes/font_size = 35
+text = "???????????"
+
+[node name="BlasterCostTxt" type="Label" parent="UI/UpgradePanel/CenterContainer/Upgrades/BlasterUpgrade"]
+layout_mode = 2
+theme = ExtResource("4_64see")
+theme_override_colors/font_color = Color(0.294118, 0.501961, 0.709804, 1)
+theme_override_font_sizes/font_size = 45
+text = "$5000"
+
+[node name="BlasterBtn" type="Button" parent="UI/UpgradePanel/CenterContainer/Upgrades/BlasterUpgrade"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath("../../../../../RestartPanel/HBoxContainer/MainMenuBtn")
+focus_neighbor_top = NodePath("../../HealthUpgrade/HealthBtn")
+focus_neighbor_right = NodePath("../../../../../RestartPanel/HBoxContainer/ContinueBtn")
+focus_neighbor_bottom = NodePath("../../../../../RestartPanel/HBoxContainer/MainMenuBtn")
+theme_override_font_sizes/font_size = 50
+text = "+"
+
+[node name="MoneyPanel" type="Panel" parent="UI"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 934.0
+offset_top = -116.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_wgm17")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MoneyPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -34.5
+offset_right = 350.0
+offset_bottom = 34.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 5
+
+[node name="EventTxt" type="Label" parent="UI/MoneyPanel/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.619608, 0, 0.443137, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 45
+text = "Event: Nothing"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSeparator" type="VSeparator" parent="UI/MoneyPanel/HBoxContainer"]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+theme_override_constants/separation = 20
+theme_override_styles/separator = SubResource("StyleBoxLine_r74he")
+
+[node name="MoneyTxt" type="Label" parent="UI/MoneyPanel/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.882353, 0.792157, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.278431, 0.168627, 0, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 45
+text = "Cheese Coins: $000"
+
+[node name="RestartPanel" type="Panel" parent="UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 934.0
+offset_bottom = 209.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_t6jdi")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/RestartPanel"]
+layout_mode = 2
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -913.0
+offset_top = 32.0
+offset_right = -63.0
+offset_bottom = 182.0
+grow_horizontal = 0
+theme_override_constants/separation = 250
+
+[node name="ContinueBtn" type="Button" parent="UI/RestartPanel/HBoxContainer"]
+custom_minimum_size = Vector2(250, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_left = NodePath("../../../UpgradePanel/CenterContainer/Upgrades/BubbleUpgrade/BubbleBtn")
+focus_neighbor_top = NodePath("../../../UpgradePanel/CenterContainer/Upgrades/BoostUpgrade/BoostBtn")
+focus_neighbor_right = NodePath("../MainMenuBtn")
+focus_neighbor_bottom = NodePath("../../../UpgradePanel/CenterContainer/Upgrades/BubbleUpgrade/BubbleBtn")
+theme_override_font_sizes/font_size = 50
+text = "Play"
+
+[node name="MainMenuBtn" type="Button" parent="UI/RestartPanel/HBoxContainer"]
+custom_minimum_size = Vector2(350, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_neighbor_left = NodePath("../ContinueBtn")
+focus_neighbor_top = NodePath("../../../UpgradePanel/CenterContainer/Upgrades/BoostUpgrade/BoostBtn")
+focus_neighbor_right = NodePath("../../../UpgradePanel/CenterContainer/Upgrades/BoostUpgrade/BoostBtn")
+focus_neighbor_bottom = NodePath("../ContinueBtn")
+theme_override_font_sizes/font_size = 50
+text = "Main Menu"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_aqvkd")
+}
+autoplay = "rotate"
+
+[node name="UIAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rmsi7")
+}
+
+[node name="UpgradeBGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_tsiih")
+volume_db = -10.0
+autoplay = true
+bus = &"BGMs"
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+bus = &"Sound Effects"
+
+[connection signal="all_aliens" from="SubViewportContainer/SubViewport/EventsManager" to="." method="_on_events_manager_all_aliens"]
+[connection signal="asteriod_belt" from="SubViewportContainer/SubViewport/EventsManager" to="." method="_on_events_manager_asteriod_belt"]
+[connection signal="nothing" from="SubViewportContainer/SubViewport/EventsManager" to="." method="_on_events_manager_nothing"]
+[connection signal="powerup_frenzy" from="SubViewportContainer/SubViewport/EventsManager" to="." method="_on_events_manager_powerup_frenzy"]
+[connection signal="ragnarok" from="SubViewportContainer/SubViewport/EventsManager" to="." method="_on_events_manager_ragnarok"]
+[connection signal="tax_return" from="SubViewportContainer/SubViewport/EventsManager" to="." method="_on_events_manager_tax_return"]
+[connection signal="pressed" from="UI/UpgradePanel/CenterContainer/Upgrades/BubbleUpgrade/BubbleBtn" to="." method="_on_bubble_btn_pressed"]
+[connection signal="pressed" from="UI/UpgradePanel/CenterContainer/Upgrades/DistanceUpgrade/DistanceBtn" to="." method="_on_distance_btn_pressed"]
+[connection signal="pressed" from="UI/UpgradePanel/CenterContainer/Upgrades/HealthUpgrade/HealthBtn" to="." method="_on_health_btn_pressed"]
+[connection signal="pressed" from="UI/UpgradePanel/CenterContainer/Upgrades/BoostUpgrade/BoostBtn" to="." method="_on_boost_btn_pressed"]
+[connection signal="pressed" from="UI/UpgradePanel/CenterContainer/Upgrades/BlasterUpgrade/BlasterBtn" to="." method="_on_blaster_btn_pressed"]
+[connection signal="pressed" from="UI/RestartPanel/HBoxContainer/ContinueBtn" to="." method="_on_continue_btn_pressed"]
+[connection signal="pressed" from="UI/RestartPanel/HBoxContainer/MainMenuBtn" to="." method="_on_main_menu_btn_pressed"]
+[connection signal="finished" from="UpgradeBGM" to="." method="_on_upgrade_bgm_finished"]

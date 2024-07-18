@@ -1,0 +1,91 @@
+[gd_scene load_steps=11 format=3 uid="uid://dai64b6mtmfdl"]
+
+[ext_resource type="Script" path="res://Pickups/powerup_block.gd" id="1_0jpr5"]
+[ext_resource type="Material" uid="uid://c1gse7il8e4su" path="res://Pickups/powerup_block_material.tres" id="1_hccry"]
+[ext_resource type="PackedScene" uid="uid://cs4pdnl4db0o1" path="res://Colliders/hurt_box.tscn" id="2_a68dd"]
+[ext_resource type="AudioStream" uid="uid://bijo4kxgsi4aa" path="res://Audio/SFXs/Pickups/powerupCollected.wav" id="4_ritn4"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_cnjqx"]
+material = ExtResource("1_hccry")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p4ni0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eywyl"]
+size = Vector3(1.11157, 1.12006, 1.08643)
+
+[sub_resource type="Animation" id="Animation_qwdex"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_b11p8"]
+resource_name = "spin"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ehop6"]
+_data = {
+"RESET": SubResource("Animation_qwdex"),
+"spin": SubResource("Animation_b11p8")
+}
+
+[node name="PowerupBlock" type="CharacterBody3D"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_0jpr5")
+SPEED_MAX = 200.0
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_cnjqx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_p4ni0")
+
+[node name="HurtBox" parent="." instance=ExtResource("2_a68dd")]
+collision_layer = 512
+collision_mask = 35
+
+[node name="CollisionShape3D" parent="HurtBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00231934, -0.0132751, 0.00463867)
+shape = SubResource("BoxShape3D_eywyl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HurtBox"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_ehop6")
+}
+autoplay = "spin"
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ritn4")
+volume_db = -7.0
+bus = &"Sound Effects"
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="body_entered" from="HurtBox" to="." method="_on_hurt_box_body_entered"]
+[connection signal="finished" from="SFX" to="." method="_on_sfx_finished"]
+
+[editable path="HurtBox"]

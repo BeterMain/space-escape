@@ -1,0 +1,161 @@
+[gd_scene load_steps=15 format=3 uid="uid://bid6f1hq31b5o"]
+
+[ext_resource type="Script" path="res://Player/Projectiles/apple_rocket.gd" id="1_8wyya"]
+[ext_resource type="PackedScene" uid="uid://dv0jq3pemcjyr" path="res://Colliders/hit_box.tscn" id="1_u2ori"]
+[ext_resource type="PackedScene" uid="uid://bfnnqj751g0f0" path="res://Imports/Apple/Projectile/Apple Rocket.gltf" id="2_5bwif"]
+[ext_resource type="PackedScene" uid="uid://cs4pdnl4db0o1" path="res://Colliders/hurt_box.tscn" id="2_tabir"]
+[ext_resource type="AudioStream" uid="uid://kl0bd5eg66l0" path="res://Audio/SFXs/Player/appleThrusters.wav" id="5_qa02t"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2wowh"]
+emission_shape_offset = Vector3(0.12, -0.11, 0.42)
+direction = Vector3(0, 0, 1)
+spread = 18.975
+initial_velocity_min = 2.0
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_max = 0.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0h4u0"]
+albedo_color = Color(0.662745, 0.290196, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_r2st7"]
+material = SubResource("StandardMaterial3D_0h4u0")
+size = Vector3(0.01, 0.01, 0.01)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_071fc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iqvy5"]
+size = Vector3(1.11865, 1.1073, 1.13576)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_32w64"]
+size = Vector3(1.04123, 1.05263, 1.05982)
+
+[sub_resource type="Animation" id="Animation_ok4i2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshPivot/blockbench_export:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_f56py"]
+resource_name = "spin"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshPivot/blockbench_export:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mea7w"]
+_data = {
+"RESET": SubResource("Animation_ok4i2"),
+"spin": SubResource("Animation_f56py")
+}
+
+[node name="AppleRocket" type="CharacterBody3D"]
+transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0, 0)
+collision_layer = 8192
+collision_mask = 0
+motion_mode = 1
+platform_on_leave = 2
+script = ExtResource("1_8wyya")
+speed = 150.0
+
+[node name="MeshPivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+
+[node name="blockbench_export" parent="MeshPivot" instance=ExtResource("2_5bwif")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.916059, -2.70172e-08)
+
+[node name="ThrusterParticles" type="Node3D" parent="MeshPivot/blockbench_export"]
+
+[node name="ThrusterParticles" type="GPUParticles3D" parent="MeshPivot/blockbench_export/ThrusterParticles"]
+transform = Transform3D(0.333333, 0, 0, 0, -1.45705e-08, -0.333333, 0, 0.333333, -1.45705e-08, 0.00571189, 0.292734, -0.0157542)
+emitting = false
+lifetime = 0.06
+preprocess = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_2wowh")
+draw_pass_1 = SubResource("BoxMesh_r2st7")
+
+[node name="ThrusterParticles2" type="GPUParticles3D" parent="MeshPivot/blockbench_export/ThrusterParticles"]
+transform = Transform3D(0.333333, 0, 0, 0, -1.45705e-08, -0.333333, 0, 0.333333, -1.45705e-08, -0.0901902, 0.292734, -0.0157542)
+emitting = false
+lifetime = 0.06
+preprocess = 0.5
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_2wowh")
+draw_pass_1 = SubResource("BoxMesh_r2st7")
+
+[node name="ThrusterParticles3" type="GPUParticles3D" parent="MeshPivot/blockbench_export/ThrusterParticles"]
+transform = Transform3D(0.333333, 0, 0, 0, -1.45705e-08, -0.333333, 0, 0.333333, -1.45705e-08, -0.0876664, 0.292734, 0.0788861)
+emitting = false
+lifetime = 0.06
+preprocess = 1.05
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_2wowh")
+draw_pass_1 = SubResource("BoxMesh_r2st7")
+
+[node name="ThrusterParticles4" type="GPUParticles3D" parent="MeshPivot/blockbench_export/ThrusterParticles"]
+transform = Transform3D(0.333333, 0, 0, 0, -1.45705e-08, -0.333333, 0, 0.333333, -1.45705e-08, 0.0145451, 0.292734, 0.0788861)
+emitting = false
+lifetime = 0.06
+preprocess = 1.01
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_2wowh")
+draw_pass_1 = SubResource("BoxMesh_r2st7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_071fc")
+
+[node name="HitBox" parent="." instance=ExtResource("1_u2ori")]
+collision_layer = 2048
+collision_mask = 16
+damage = 2
+
+[node name="CollisionShape3D" parent="HitBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00854492, 0.00482178, 0.00936127)
+shape = SubResource("BoxShape3D_iqvy5")
+
+[node name="HurtBox" parent="." instance=ExtResource("2_tabir")]
+collision_layer = 4096
+collision_mask = 32
+damage = 2
+
+[node name="CollisionShape3D" parent="HurtBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000961304, 0.000526428, 0.0023222)
+shape = SubResource("BoxShape3D_32w64")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mea7w")
+}
+autoplay = "spin"
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_qa02t")
+volume_db = -2.0
+autoplay = true
+bus = &"Sound Effects"
+
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+
+[editable path="HitBox"]
+[editable path="HurtBox"]

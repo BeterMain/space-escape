@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3qwbd7t6r8k3"]
+
+[ext_resource type="AudioStream" uid="uid://n2xjyefuo2ul" path="res://Audio/BGM/Through_Space(Opening).wav" id="1_m8l72"]
+[ext_resource type="Script" path="res://Audio/BGM/level_bgm.gd" id="2_hw7v4"]
+
+[node name="BGM" type="AudioStreamPlayer"]
+process_mode = 3
+stream = ExtResource("1_m8l72")
+volume_db = -10.0
+autoplay = true
+bus = &"BGMs"
+script = ExtResource("2_hw7v4")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

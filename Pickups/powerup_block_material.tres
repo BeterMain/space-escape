@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://c1gse7il8e4su"]
+
+[ext_resource type="Shader" path="res://Pickups/rainbow.gdshader" id="1_qxc2j"]
+[ext_resource type="Texture2D" uid="uid://bngw2tpcg6chy" path="res://icon.svg" id="2_brxgh"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_qxc2j")
+shader_parameter/uv1_scale = Vector2(3, 2)
+shader_parameter/alpha = 0.5
+shader_parameter/rippliing = false
+shader_parameter/using_texture = true
+shader_parameter/head_color = Vector3(0, 0.5, 0)
+shader_parameter/face_color = Vector3(0, 1, 1)
+shader_parameter/question_texture = ExtResource("2_brxgh")

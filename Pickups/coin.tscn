@@ -1,0 +1,92 @@
+[gd_scene load_steps=11 format=3 uid="uid://bx3s7x5dpa37c"]
+
+[ext_resource type="Script" path="res://Pickups/coin.gd" id="1_tkg3t"]
+[ext_resource type="Texture2D" uid="uid://bs23b0nhkwkyi" path="res://Pickups/coin_texture.png" id="2_5ag05"]
+[ext_resource type="PackedScene" uid="uid://cs4pdnl4db0o1" path="res://Colliders/hurt_box.tscn" id="2_vhiob"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gkdse"]
+albedo_color = Color(1, 1, 0, 1)
+albedo_texture = ExtResource("2_5ag05")
+metallic = 1.0
+roughness = 0.76
+uv1_scale = Vector3(2, 2, 2)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fu1c2"]
+material = SubResource("StandardMaterial3D_gkdse")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_nj4dq"]
+height = 0.0585339
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8k2ar"]
+size = Vector3(1.03833, 0.423791, 1.04858)
+
+[sub_resource type="Animation" id="Animation_0ura5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_amkxb"]
+resource_name = "rotate"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 6.28319)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yylwv"]
+_data = {
+"RESET": SubResource("Animation_0ura5"),
+"rotate": SubResource("Animation_amkxb")
+}
+
+[node name="Coin" type="CharacterBody3D"]
+transform = Transform3D(0.25, 0, 0, 0, -1.09278e-08, -0.25, 0, 0.25, -1.09278e-08, 0, 0, 0)
+collision_layer = 1024
+collision_mask = 0
+script = ExtResource("1_tkg3t")
+SPEED_MAX = 100.0
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.0288974, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_fu1c2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_nj4dq")
+
+[node name="HurtBox" parent="." instance=ExtResource("2_vhiob")]
+collision_layer = 512
+collision_mask = 35
+
+[node name="CollisionShape3D" parent="HurtBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00386326, -1.04083e-15)
+shape = SubResource("BoxShape3D_8k2ar")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_yylwv")
+}
+autoplay = "rotate"
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="body_entered" from="HurtBox" to="." method="_on_hurt_box_body_entered"]
+
+[editable path="HurtBox"]

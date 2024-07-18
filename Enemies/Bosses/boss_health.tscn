@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcsfhoxvflr0o"]
+
+[ext_resource type="Script" path="res://Scenes/stats.gd" id="1_fmis7"]
+
+[node name="BossHealth" type="Node"]
+script = ExtResource("1_fmis7")
+max_health = 1.6
