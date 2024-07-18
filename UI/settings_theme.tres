@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3 uid="uid://bq64b06ak21t4"]
+
+[resource]
+CheckBox/font_sizes/font_size = 16
+Label/font_sizes/font_size = 50
+OptionButton/font_sizes/font_size = 28

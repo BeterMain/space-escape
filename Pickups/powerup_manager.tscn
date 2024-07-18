@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy6wo7pg16uxc"]
+
+[ext_resource type="Script" path="res://Levels/PowerupManager.gd" id="1_vqor6"]
+
+[sub_resource type="Curve3D" id="Curve3D_to3qe"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -4.44915, 0, -7.08807, 0, 0, 0, 0, 0, 0, 4.00835, 0, -6.97417),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[node name="PowerupManager" type="Node"]
+script = ExtResource("1_vqor6")
+common_duration = 10
+uncommon_duration = 10
+rare_duration = 5
+epic_duration = 5
+
+[node name="PowerupTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="PowerupSpawnPath" type="Path3D" parent="."]
+curve = SubResource("Curve3D_to3qe")
+
+[node name="PowerupSpawnLocation" type="PathFollow3D" parent="PowerupSpawnPath"]
+transform = Transform3D(-0.0134661, 0, -0.999909, 0, 1, 0, 0.999909, 0, -0.0134661, -0.182341, 0, -7.03061)
+progress = 4.26719
+
+[node name="GapTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="FireRate" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+volume_db = -8.0
+bus = &"Sound Effects"
+
+[connection signal="timeout" from="PowerupTimer" to="." method="_on_powerup_spawner_timeout"]
+[connection signal="timeout" from="FireRate" to="." method="_on_fire_rate_timeout"]

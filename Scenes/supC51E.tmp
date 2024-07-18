@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3ft1joa28imi"]
+
+[ext_resource type="Script" path="res://Scenes/supervisor.gd" id="1_0nt82"]
+
+[node name="Supervisor" type="Node"]
+script = ExtResource("1_0nt82")

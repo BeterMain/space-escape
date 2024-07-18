@@ -1,0 +1,136 @@
+[gd_scene load_steps=17 format=3 uid="uid://cioix0ohvn8j"]
+
+[ext_resource type="Script" path="res://Obstacles/asteriod.gd" id="1_drbhr"]
+[ext_resource type="PackedScene" uid="uid://dv0jq3pemcjyr" path="res://Colliders/hit_box.tscn" id="1_ihc0m"]
+[ext_resource type="PackedScene" uid="uid://cs4pdnl4db0o1" path="res://Colliders/hurt_box.tscn" id="2_0crfg"]
+[ext_resource type="PackedScene" uid="uid://7nvpr36q10i1" path="res://Imports/Asteriod/asteriod.gltf" id="2_p4ccy"]
+[ext_resource type="PackedScene" uid="uid://btfydm00tpmrs" path="res://Scenes/stats.tscn" id="4_3hbj7"]
+[ext_resource type="Shader" path="res://Pickups/rainbow.gdshader" id="5_genvt"]
+[ext_resource type="AudioStream" uid="uid://mitav5lsudvr" path="res://Audio/SFXs/Obstacle/asteriodHit.wav" id="7_7q4s5"]
+[ext_resource type="Texture2D" uid="uid://bnypuailo1uh5" path="res://Obstacles/speed_arrow.png" id="8_wv05g"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_anbqh"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_aq76g"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_7ogoq"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5hl2a"]
+radius = 0.305367
+height = 1.2918
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i2kll"]
+render_priority = 0
+shader = ExtResource("5_genvt")
+shader_parameter/uv1_scale = Vector2(1, 1)
+shader_parameter/alpha = 1.0
+shader_parameter/rippliing = true
+shader_parameter/using_texture = false
+shader_parameter/head_color = Vector3(0, 0.5, 0)
+shader_parameter/face_color = Vector3(0, 1, 1)
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_dyfuq"]
+material = SubResource("ShaderMaterial_i2kll")
+shape = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bxigj"]
+transparency = 1
+diffuse_mode = 3
+albedo_texture = ExtResource("8_wv05g")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_6xea6"]
+material = SubResource("StandardMaterial3D_bxigj")
+size = Vector2(0.1, 0.1)
+
+[node name="Asteriod" type="CharacterBody3D" node_paths=PackedStringArray("sfx")]
+transform = Transform3D(0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, 0, 0, 0)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_drbhr")
+sfx = NodePath("SFX")
+
+[node name="SpinPivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SpinPivot"]
+visibility_range_end = 117.03
+
+[node name="blockbench_export" parent="SpinPivot/MeshInstance3D" instance=ExtResource("2_p4ccy")]
+transform = Transform3D(1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, 0, -0.447883, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_anbqh")
+
+[node name="MainHitBox" parent="." instance=ExtResource("1_ihc0m")]
+visible = false
+collision_layer = 8
+collision_mask = 256
+damage = 1
+
+[node name="CollisionShape3D" parent="MainHitBox" index="0"]
+shape = SubResource("SphereShape3D_aq76g")
+
+[node name="HurtBox" parent="." instance=ExtResource("2_0crfg")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+visible = false
+collision_layer = 16
+collision_mask = 133152
+damage = 2
+
+[node name="CollisionShape3D" parent="HurtBox" index="0"]
+shape = SubResource("SphereShape3D_7ogoq")
+
+[node name="Stats" parent="." instance=ExtResource("4_3hbj7")]
+
+[node name="TrailHitBox" parent="." instance=ExtResource("1_ihc0m")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+collision_layer = 8
+collision_mask = 256
+
+[node name="CollisionShape3D" parent="TrailHitBox" index="0"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 0.799005, 0, 0)
+shape = SubResource("CapsuleShape3D_5hl2a")
+disabled = true
+
+[node name="TrailMesh" type="MeshInstance3D" parent="TrailHitBox"]
+transform = Transform3D(1.26066, -2.30926e-14, -4.76456e-22, 0, -2.20129e-08, 0.251798, -6.03961e-14, -0.503596, -1.10064e-08, 0.856171, 0, -1.15773e-09)
+mesh = SubResource("RibbonTrailMesh_dyfuq")
+
+[node name="SpeedParticles" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.242108, 0)
+emitting = false
+amount = 4
+lifetime = 0.23
+speed_scale = 0.5
+explosiveness = 0.7
+randomness = 1.0
+lifetime_randomness = 0.61
+local_coords = true
+mesh = SubResource("QuadMesh_6xea6")
+emission_shape = 3
+emission_box_extents = Vector3(0.5, 0.5, 0.5)
+direction = Vector3(0, 1, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 4.0
+linear_accel_min = 1.0
+linear_accel_max = 3.0
+scale_amount_min = 0.5
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_7q4s5")
+volume_db = -10.0
+bus = &"Sound Effects"
+
+[connection signal="area_entered" from="MainHitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="no_health" from="Stats" to="." method="_on_stats_no_health"]
+
+[editable path="MainHitBox"]
+[editable path="HurtBox"]
+[editable path="TrailHitBox"]

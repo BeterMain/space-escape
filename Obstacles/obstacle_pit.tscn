@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dyvoetwgwu4wq"]
+
+[ext_resource type="PackedScene" uid="uid://dv0jq3pemcjyr" path="res://Colliders/hit_box.tscn" id="1_0mfpj"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ap35e"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dnpvd"]
+
+[node name="ObstaclePit" type="MeshInstance3D"]
+transform = Transform3D(9.33892, 0, 0, 0, 9.86784, 0, 0, 0, 0.936208, 0, 0, 3.49482)
+visible = false
+mesh = SubResource("BoxMesh_ap35e")
+
+[node name="HitBox" parent="." instance=ExtResource("1_0mfpj")]
+collision_layer = 32
+collision_mask = 528
+
+[node name="CollisionShape3D" parent="HitBox" index="0"]
+shape = SubResource("BoxShape3D_dnpvd")
+
+[editable path="HitBox"]

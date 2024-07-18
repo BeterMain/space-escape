@@ -1,0 +1,92 @@
+[gd_scene load_steps=11 format=3 uid="uid://dw3gymlkabjqw"]
+
+[ext_resource type="Texture2D" uid="uid://ddbpu2rb6jjol" path="res://Enemies/Bosses/theodore.jpg" id="1_q4fxi"]
+[ext_resource type="PackedScene" uid="uid://cs4pdnl4db0o1" path="res://Colliders/hurt_box.tscn" id="2_egok8"]
+[ext_resource type="Script" path="res://Enemies/Bosses/theodore.gd" id="2_gtyh5"]
+[ext_resource type="AudioStream" uid="uid://uss8t45ux0cw" path="res://Audio/SFXs/Bosses/theodoreOpening.mp3" id="4_5lax1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7rncu"]
+albedo_texture = ExtResource("1_q4fxi")
+
+[sub_resource type="QuadMesh" id="QuadMesh_b4s5a"]
+material = SubResource("StandardMaterial3D_7rncu")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1d10j"]
+radius = 0.928262
+height = 2.50384
+
+[sub_resource type="Animation" id="Animation_rupug"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -2)]
+}
+
+[sub_resource type="Animation" id="Animation_l42ra"]
+resource_name = "entrance"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, -2), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mkjdl"]
+_data = {
+"RESET": SubResource("Animation_rupug"),
+"entrance": SubResource("Animation_l42ra")
+}
+
+[node name="Theodore" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+mesh = SubResource("QuadMesh_b4s5a")
+script = ExtResource("2_gtyh5")
+max_health = 1.6
+
+[node name="HurtBox" parent="." instance=ExtResource("2_egok8")]
+collision_layer = 32768
+collision_mask = 2048
+
+[node name="CollisionShape3D" parent="HurtBox" index="0"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_1d10j")
+
+[node name="AbilityTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ScreamTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mkjdl")
+}
+autoplay = "entrance"
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_5lax1")
+volume_db = 3.0
+autoplay = true
+bus = &"Voice Lines"
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="timeout" from="AbilityTimer" to="." method="_on_ability_timer_timeout"]
+[connection signal="timeout" from="ScreamTimer" to="." method="_on_scream_timer_timeout"]
+[connection signal="finished" from="SFX" to="." method="_on_sfx_finished"]
+
+[editable path="HurtBox"]

@@ -1,0 +1,97 @@
+[gd_scene load_steps=13 format=3 uid="uid://caivxbdo8mfw6"]
+
+[ext_resource type="Texture2D" uid="uid://b0jntvo73em0q" path="res://Enemies/Bosses/dug.png" id="1_6rj45"]
+[ext_resource type="PackedScene" uid="uid://cs4pdnl4db0o1" path="res://Colliders/hurt_box.tscn" id="1_dj4ry"]
+[ext_resource type="Script" path="res://Enemies/Bosses/dug.gd" id="2_dhxgy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8waw"]
+albedo_texture = ExtResource("1_6rj45")
+
+[sub_resource type="QuadMesh" id="QuadMesh_gtnm2"]
+material = SubResource("StandardMaterial3D_p8waw")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cdt0e"]
+height = 11.838
+
+[sub_resource type="Animation" id="Animation_yjh3i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -5)]
+}
+
+[sub_resource type="Animation" id="Animation_gnott"]
+resource_name = "burp"
+
+[sub_resource type="Animation" id="Animation_lmba1"]
+resource_name = "entrance"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, -2), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_svugf"]
+resource_name = "fart"
+
+[sub_resource type="Animation" id="Animation_vcbgw"]
+resource_name = "idle"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w20ln"]
+_data = {
+"RESET": SubResource("Animation_yjh3i"),
+"burp": SubResource("Animation_gnott"),
+"entrance": SubResource("Animation_lmba1"),
+"fart": SubResource("Animation_svugf"),
+"idle": SubResource("Animation_vcbgw")
+}
+
+[node name="Dug" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+mesh = SubResource("QuadMesh_gtnm2")
+script = ExtResource("2_dhxgy")
+max_health = 1.6
+
+[node name="HurtBox" parent="." instance=ExtResource("1_dj4ry")]
+collision_layer = 32768
+collision_mask = 2048
+
+[node name="CollisionShape3D" parent="HurtBox" index="0"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_cdt0e")
+
+[node name="AbilityTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_w20ln")
+}
+autoplay = "entrance"
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+bus = &"Sound Effects"
+
+[node name="VoiceLineSFX" type="AudioStreamPlayer" parent="."]
+bus = &"Voice Lines"
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="timeout" from="AbilityTimer" to="." method="_on_ability_timer_timeout"]
+
+[editable path="HurtBox"]

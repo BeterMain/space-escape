@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://dymj7wkj285j5"]
+
+[ext_resource type="Script" path="res://Player/bubble_shockwave.gd" id="1_xvfmq"]
+[ext_resource type="PackedScene" uid="uid://dv0jq3pemcjyr" path="res://Colliders/hit_box.tscn" id="2_bhl6p"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_v4grn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fl1vo"]
+transparency = 1
+albedo_color = Color(0, 0, 1, 0.341176)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pxxla"]
+
+[node name="BubbleShockwave" type="Node3D"]
+script = ExtResource("1_xvfmq")
+
+[node name="BubbleShield" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_v4grn")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_fl1vo")
+
+[node name="HitBox" parent="." instance=ExtResource("2_bhl6p")]
+collision_layer = 131072
+collision_mask = 16
+damage = 5
+
+[node name="CollisionShape3D" parent="HitBox" index="0"]
+shape = SubResource("SphereShape3D_pxxla")
+
+[editable path="HitBox"]

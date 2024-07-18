@@ -1,0 +1,125 @@
+[gd_scene load_steps=13 format=3 uid="uid://ctirivsy742hl"]
+
+[ext_resource type="Script" path="res://Player/Projectiles/banana_projectile.gd" id="1_fwo2g"]
+[ext_resource type="PackedScene" uid="uid://dv0jq3pemcjyr" path="res://Colliders/hit_box.tscn" id="2_xoukw"]
+[ext_resource type="PackedScene" uid="uid://bswjwl7fhpav5" path="res://Imports/Banana/Projectile & Topper/Banana Projectile.gltf" id="2_yfhl7"]
+[ext_resource type="PackedScene" uid="uid://cs4pdnl4db0o1" path="res://Colliders/hurt_box.tscn" id="3_m4qji"]
+[ext_resource type="AudioStream" uid="uid://citgv6ql3nc8o" path="res://Audio/SFXs/Player/bananaSpin.wav" id="5_dfb7u"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h8708"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4g10y"]
+size = Vector3(1.20172, 1.17343, 1.20215)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mgkrl"]
+size = Vector3(1.08838, 1.06973, 1.06927)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_st8q7"]
+radius = 14.693
+
+[sub_resource type="Animation" id="Animation_d168o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpinPivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_1xwu0"]
+resource_name = "spin"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpinPivot:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dhgyg"]
+_data = {
+"RESET": SubResource("Animation_d168o"),
+"spin": SubResource("Animation_1xwu0")
+}
+
+[node name="BananaProjectile" type="CharacterBody3D"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+collision_layer = 8192
+script = ExtResource("1_fwo2g")
+max_speed = 350.0
+base_speed = 220
+bounce_factor = 1.5
+
+[node name="SpinPivot" type="Marker3D" parent="."]
+
+[node name="blockbench_export" parent="SpinPivot" instance=ExtResource("2_yfhl7")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.214732, -0.263512, 0.135202)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_h8708")
+
+[node name="HitBox" parent="." instance=ExtResource("2_xoukw")]
+visible = false
+collision_layer = 2048
+collision_mask = 16
+damage = 1
+
+[node name="CollisionShape3D" parent="HitBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00863647, -0.00611877, -0.00732422)
+shape = SubResource("BoxShape3D_4g10y")
+
+[node name="HurtBox" parent="." instance=ExtResource("3_m4qji")]
+collision_layer = 4096
+collision_mask = 32
+damage = 1
+
+[node name="CollisionShape3D" parent="HurtBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000732422, -0.00120544, 0.00234604)
+shape = SubResource("BoxShape3D_mgkrl")
+
+[node name="DetectionRadius" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionRadius"]
+shape = SubResource("SphereShape3D_st8q7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dhgyg")
+}
+autoplay = "spin"
+
+[node name="LifeDuration" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_dfb7u")
+volume_db = 2.0
+autoplay = true
+bus = &"Sound Effects"
+
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="body_entered" from="DetectionRadius" to="." method="_on_detection_radius_body_entered"]
+[connection signal="body_exited" from="DetectionRadius" to="." method="_on_detection_radius_body_exited"]
+[connection signal="timeout" from="LifeDuration" to="." method="_on_life_duration_timeout"]
+[connection signal="finished" from="SFX" to="." method="_on_sfx_finished"]
+
+[editable path="HitBox"]
+[editable path="HurtBox"]

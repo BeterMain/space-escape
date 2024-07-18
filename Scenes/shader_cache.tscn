@@ -1,0 +1,127 @@
+[gd_scene load_steps=15 format=3 uid="uid://cfayr4kahbxuw"]
+
+[ext_resource type="PackedScene" uid="uid://dymj7wkj285j5" path="res://Player/bubble_shockwave.tscn" id="1_jihx7"]
+[ext_resource type="Script" path="res://Scenes/shader_cache.gd" id="1_t1rgf"]
+[ext_resource type="PackedScene" uid="uid://bx3s7x5dpa37c" path="res://Pickups/coin.tscn" id="2_cm8xg"]
+[ext_resource type="PackedScene" uid="uid://b54hr4ch66xdg" path="res://Pickups/coin_effect.tscn" id="3_ae563"]
+[ext_resource type="PackedScene" uid="uid://cioix0ohvn8j" path="res://Obstacles/asteriod.tscn" id="4_eo0ju"]
+[ext_resource type="PackedScene" uid="uid://cbty5vh73kwgw" path="res://Obstacles/asteriod_effect.tscn" id="5_rqbno"]
+[ext_resource type="PackedScene" uid="uid://dai64b6mtmfdl" path="res://Pickups/powerup_block.tscn" id="6_r40c0"]
+[ext_resource type="PackedScene" uid="uid://ctbeb5ifp5mq2" path="res://Player/player.tscn" id="7_gwoh1"]
+[ext_resource type="PackedScene" uid="uid://bid6f1hq31b5o" path="res://Player/Projectiles/apple_rocket.tscn" id="8_ydcxh"]
+[ext_resource type="PackedScene" uid="uid://ctirivsy742hl" path="res://Player/Projectiles/banana_projectile.tscn" id="9_dpqbw"]
+[ext_resource type="PackedScene" uid="uid://oqeucqvdblsi" path="res://Player/Projectiles/orange_beam.tscn" id="10_e7gsg"]
+[ext_resource type="PackedScene" uid="uid://d23d0sdb50mi4" path="res://Player/Projectiles/tropical_rocket.tscn" id="11_4dhbt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dys10"]
+bg_color = Color(0.184314, 0.184314, 0.184314, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dojup"]
+bg_color = Color(0.854902, 0.501961, 0, 1)
+
+[node name="ShaderCache" type="Node3D"]
+script = ExtResource("1_t1rgf")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/CenterContainer"]
+custom_minimum_size = Vector2(800, 150)
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="LoadingTxt" type="Label" parent="UI/Control/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Compiling Shaders..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoadingBar" type="ProgressBar" parent="UI/Control/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/background = SubResource("StyleBoxFlat_dys10")
+theme_override_styles/fill = SubResource("StyleBoxFlat_dojup")
+value = 30.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.145258)
+current = true
+
+[node name="BubbleShockwave" parent="Camera3D" instance=ExtResource("1_jihx7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.61159)
+
+[node name="Coin" parent="Camera3D" instance=ExtResource("2_cm8xg")]
+transform = Transform3D(0.25, 0, 0, 0, -1.09278e-08, -0.25, 0, 0.25, -1.09278e-08, 0, 0, -1.61159)
+
+[node name="CoinEffect" parent="Camera3D" instance=ExtResource("3_ae563")]
+transform = Transform3D(0.03125, 0, 0, 0, -1.36597e-09, -0.03125, 0, 0.03125, -1.36597e-09, 0, 0, -1.61159)
+
+[node name="Asteriod" parent="Camera3D" instance=ExtResource("4_eo0ju")]
+transform = Transform3D(0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, 0, 0, -1.61159)
+
+[node name="SpeedParticles" parent="Camera3D/Asteriod" index="6"]
+emitting = true
+
+[node name="AsteriodEffect" parent="Camera3D" instance=ExtResource("5_rqbno")]
+transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0, -1.61159)
+
+[node name="PowerupBlock" parent="Camera3D" instance=ExtResource("6_r40c0")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, -1.61159)
+
+[node name="Player" parent="Camera3D" instance=ExtResource("7_gwoh1")]
+transform = Transform3D(0.66, 0, 0, 0, 0.66, 0, 0, 0, 0.66, 0, 0, -1.61159)
+
+[node name="SpeedParticles" parent="Camera3D/Player" index="13"]
+emitting = true
+
+[node name="AppleRocket" parent="Camera3D" instance=ExtResource("8_ydcxh")]
+transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0, -1.61159)
+
+[node name="BananaProjectile" parent="Camera3D" instance=ExtResource("9_dpqbw")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, -1.61159)
+
+[node name="OrangeBeam" parent="Camera3D" instance=ExtResource("10_e7gsg")]
+transform = Transform3D(0.25, 0, 0, 0, 2.98122e-09, 0.25, 0, -0.25, 2.98122e-09, 0, 0, -1.35387)
+
+[node name="TropicalRocket" parent="Camera3D" instance=ExtResource("11_4dhbt")]
+transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0, -1.61159)
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+
+[editable path="Camera3D/Asteriod"]
+[editable path="Camera3D/Asteriod/MainHitBox"]
+[editable path="Camera3D/Asteriod/HurtBox"]
+[editable path="Camera3D/Asteriod/TrailHitBox"]
+[editable path="Camera3D/Player"]
+[editable path="Camera3D/Player/flash_export"]
+[editable path="Camera3D/Player/HurtBox"]

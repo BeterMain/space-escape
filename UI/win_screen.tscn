@@ -1,0 +1,67 @@
+[gd_scene load_steps=3 format=3 uid="uid://sbcqb2sd0jdl"]
+
+[ext_resource type="Script" path="res://UI/win_screen.gd" id="1_tpodw"]
+[ext_resource type="AudioStream" uid="uid://o2ip61o3fc0b" path="res://Audio/BGM/TempWin.ogg" id="2_r440l"]
+
+[node name="WinScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tpodw")
+
+[node name="BG" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="WinTxt" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -311.0
+offset_top = 280.0
+offset_right = 324.0
+offset_bottom = 485.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.372549, 0, 0.635294, 1)
+theme_override_constants/shadow_offset_x = 6
+theme_override_constants/shadow_offset_y = 6
+theme_override_font_sizes/font_size = 150
+text = "Thanks for Playing!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MainMenuBtn" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -140.0
+offset_top = -296.0
+offset_right = 140.0
+offset_bottom = -265.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 50
+text = "Back To Main Menu"
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_r440l")
+volume_db = -8.0
+autoplay = true
+bus = &"BGMs"
+
+[connection signal="pressed" from="MainMenuBtn" to="." method="_on_main_menu_btn_pressed"]
+[connection signal="finished" from="BGM" to="." method="_on_bgm_finished"]

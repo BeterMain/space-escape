@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://b54hr4ch66xdg"]
+
+[ext_resource type="AudioStream" uid="uid://bf5vjcq2g0jcp" path="res://Audio/SFXs/Pickups/pickupCoin.wav" id="1_4bv3m"]
+[ext_resource type="Script" path="res://Pickups/coin_effect.gd" id="1_jy68w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fw52i"]
+albedo_color = Color(0.654902, 0.654902, 0, 1)
+metallic = 1.0
+roughness = 0.74
+billboard_mode = 1
+
+[sub_resource type="TextMesh" id="TextMesh_fl1ih"]
+material = SubResource("StandardMaterial3D_fw52i")
+text = "+100"
+
+[node name="CoinEffect" type="Node3D"]
+script = ExtResource("1_jy68w")
+
+[node name="GPUParticles3D" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 1
+lifetime = 4.95
+one_shot = true
+speed_scale = 1.5
+explosiveness = 1.0
+randomness = 1.0
+local_coords = true
+mesh = SubResource("TextMesh_fl1ih")
+direction = Vector3(0, 1, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+scale_amount_min = 0.5
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_4bv3m")
+volume_db = -5.0
+autoplay = true
+bus = &"Sound Effects"
+
+[connection signal="finished" from="AudioStreamPlayer" to="." method="_on_audio_stream_player_finished"]
