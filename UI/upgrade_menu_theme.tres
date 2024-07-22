@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://e2l5i4dbx8m8"]
+
+[ext_resource type="FontFile" uid="uid://dxg4nni4ox4b6" path="res://UI/Font/Jumpers-V44D6.otf" id="1_kjijq"]
+
+[resource]
+default_font = ExtResource("1_kjijq")

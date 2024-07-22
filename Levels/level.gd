@@ -10,21 +10,28 @@ const INPUT_GATHERED = preload("res://Audio/SFXs/UI/inputGathered.wav")
 @onready var sfx = $SFX
 @onready var voice_lines = $VoiceLines
 
+const ANDHRIMNIR_WIN = preload("res://Audio/SFXs/Bosses/andhrimnir_win.mp3")
+const THEODORE_WIN = preload("res://Audio/SFXs/Bosses/theodoreWin.mp3")
+
 # Boss scenes
 const DUG = preload("res://Enemies/Bosses/dug.tscn")
 const THEODORE = preload("res://Enemies/Bosses/theodore.tscn")
+const ANDHRIMNIR = preload("res://Enemies/Bosses/andhrimnir.tscn")
+
+
 
 # Onready vars
 @onready var full_ui = $FullUI
 @onready var distance_txt = $FullUI/Control/DistanceTxt
 @onready var upgrade_btn = $FullUI/PauseMenu/Buttons/MainMenuBtn
+@onready var settings_menu = $FullUI/PauseMenu/SettingsMenu
 
 @onready var space_particles = $SubViewportContainer/SubViewport/SpaceParticles
 
 @onready var powerup_manager = $SubViewportContainer/SubViewport/PowerupManager
 @onready var gap_timer = $SubViewportContainer/SubViewport/PowerupManager/GapTimer
 
-@onready var boss_spawn_loc = $SubViewportContainer/SubViewport/BossSpawnLoc
+@onready var boss_spawn_loc = $BossSpawnLoc
 
 @onready var spawner = $SubViewportContainer/SubViewport/Spawner
 @onready var animation_player = $AnimationPlayer
@@ -38,7 +45,7 @@ const THEODORE = preload("res://Enemies/Bosses/theodore.tscn")
 @export var level_speed = 0.01 # the lower the number the faster the level
 @export var growth_offset = 2500.0 # target for the level
 
-var bosses = [THEODORE, DUG]
+var bosses = [THEODORE]
 var boss_scene = null
 @export var required_wins = 3
 var bosses_beat = 0
@@ -77,8 +84,11 @@ func _ready():
 	Supervisor.set_master_db(Supervisor.master_db)
 	space_particles.emitting = true
 	
+	settings_menu.can_clear_save = false
+	
 	# Activating current event
-	current_event = Supervisor.next_event 
+	current_event = Supervisor.next_event
+	
 	match current_event:
 		
 		"all_aliens":
@@ -97,13 +107,17 @@ func _ready():
 			event_nothing()
 
 func _process(delta):
-	upgrade_btn.disabled = bosses_beat < 1
 	code_inputs.visible = can_input_code 
-	# Handle Distance Calculation/Bosses
+	upgrade_btn.disabled = boss_started
+	
+	# Handle Distance Calculation/Bossesdd
 	if distance <= target:
 		boss_started = false
 		# Check for code inputs
 		# ↑↓→←
+		if Input.is_action_just_pressed("cancel_input"):
+			can_input_code = false
+		
 		if can_input_code and len(inputs) <= len(Supervisor.code_key):
 			if Input.is_action_just_pressed("ui_up"):
 				inputs += "↑" 
@@ -120,7 +134,7 @@ func _process(delta):
 				
 			code_inputs.text = inputs
 			if inputs == Supervisor.code_key:
-				spawn_final_boss()
+				player_win()
 		else:
 			if input_timer.time_left != 0 and not matched:
 				play_sfx(FAIL_INPUT)
@@ -151,13 +165,19 @@ func _process(delta):
 			boss_started = true
 			# Spawn Boss
 			bosses.shuffle()
-			boss_scene = bosses.pick_random()
+			if current_event != "ragnarok":
+				boss_scene = bosses.pick_random()
+			else:
+				boss_scene = ANDHRIMNIR
 			match boss_scene:
 				THEODORE:
 					spawn_theodore()
 				
 				DUG:
 					spawn_dug()
+				
+				ANDHRIMNIR:
+					spawn_andhrimnir()
 
 # Boss funcs
 func start_level():
@@ -171,22 +191,17 @@ func start_level():
 	bgm.restart_bgm()
 	animation_player.play("normal_speed")
 
-func spawn_final_boss():
-	print("TODO: Make final boss")
+func player_win():
 	can_input_code = false
 	matched = true
 	play_sfx(CORRECT)
 	SceneManager.change_scene_to_file("res://UI/win_screen.tscn", "fade")
-	'''
-	spawner.start_spawning()
-	bgm.restart_bgm()
-	'''
 
 func spawn_dug():
 	var boss = boss_scene.instantiate()
 	boss.position = boss_spawn_loc.position
 	
-	full_ui.current_boss = "Dug"
+	full_ui.current_boss = "Dug the World Eater"
 	full_ui.display_boss_health()
 	
 	# Connect ability signals
@@ -220,6 +235,24 @@ func spawn_theodore():
 	# add to scene
 	boss_spawn_loc.add_child(boss)
 
+func spawn_andhrimnir():
+	var boss = boss_scene.instantiate()
+	boss.position = boss_spawn_loc.position
+	
+	full_ui.current_boss = "Andhrímnir the Chef of the Gods"
+	full_ui.display_boss_health()
+	
+	# Connect ability signals
+	boss.revenge.connect(spawn_boar)
+	boss.ability_changed.connect(stop_abilities)
+	
+	boss.half_way.connect(shorten_spawn_rate)
+	boss.idle.connect(stop_abilities)
+	boss.dead.connect(reset)
+	
+	# add to scene
+	boss_spawn_loc.add_child(boss) 
+
 # theodore Ability funcs
 func shorten_spawn_rate():
 	spawner.shorten_spawn_rate()
@@ -227,7 +260,9 @@ func shorten_spawn_rate():
 
 func kill_boss():
 	if boss_scene == THEODORE and boss_started:
-		voice_lines.play()
+		play_voice_line(THEODORE_WIN)
+	elif boss_scene == ANDHRIMNIR and boss_started:
+		play_voice_line(ANDHRIMNIR_WIN)
 	
 	if boss_spawn_loc.get_child_count() > 0:
 		boss_spawn_loc.get_child(0).queue_free()
@@ -266,6 +301,7 @@ func stop_abilities():
 	player.speed_lowered = false
 	player.SPEED = player.MAX_SPEED
 	
+	spawner.set_spawn_boar(false)
 	spawner.stop_interferences()
 
 # Misc funcs
@@ -286,6 +322,11 @@ func play_sfx(sound):
 	sfx.stream = sound
 	sfx.play()
 
+func play_voice_line(sound):
+	voice_lines.stop()
+	voice_lines.stream = sound
+	voice_lines.play()
+
 func player_death():
 	$SubViewportContainer/SubViewport/DeathTimer.start()
 	kill_boss()
@@ -300,6 +341,9 @@ func activate_powerup_frenzy():
 
 func deactivate_powerup_frenzy():
 	powerupblock_threshold = default_powerupblock_threshold
+
+func spawn_boar():
+	spawner.set_spawn_boar(true)
 
 # Connect Funcs
 func _on_tree_exiting():
@@ -328,35 +372,46 @@ func _on_input_timer_timeout():
 func event_all_aliens():
 	current_event = "Oops All Aliens!"
 	
+	bosses = [THEODORE, DUG]
 	spawner.set_only_ufos(true)
+	spawner.set_ragnarok(false)
 	deactivate_powerup_frenzy()
 
 func event_asteriod_belt():
 	current_event = "Asteroid Belt"
 	
+	bosses = [THEODORE, DUG]
 	spawner.set_only_asteriods(true)
+	spawner.set_ragnarok(false)
 	deactivate_powerup_frenzy()
 
 func event_nothing():
 	current_event = "Nothing"
 	
+	bosses = [THEODORE, DUG]
 	spawner.set_double_money(false)
 	spawner.set_only_asteriods(false)
 	spawner.set_only_ufos(false)
+	spawner.set_ragnarok(false)
 	deactivate_powerup_frenzy()
 
 func event_powerup_frenzy():
 	current_event = "Powerup Frenzy"
 	
+	bosses = [THEODORE, DUG]
 	spawner.set_double_money(false)
 	spawner.set_only_asteriods(false)
 	spawner.set_only_ufos(false)
+	spawner.set_ragnarok(false)
+	spawner.set_ragnarok(false)
 	activate_powerup_frenzy()
 
 func event_ragnarok():
 	current_event = "Ragnarök"
 	
-	print("TODO: Add another boss")
+	bosses = [ANDHRIMNIR]
+	
+	spawner.set_ragnarok(true)
 	spawner.set_double_money(false)
 	spawner.set_only_asteriods(false)
 	spawner.set_only_ufos(false)
@@ -365,7 +420,9 @@ func event_ragnarok():
 func event_tax_return():
 	current_event = "Tax Return"
 	
+	bosses = [THEODORE, DUG]
 	spawner.set_double_money(true)
+	spawner.set_ragnarok(false)
 	deactivate_powerup_frenzy()
 
 func _on_events_manager_all_aliens():

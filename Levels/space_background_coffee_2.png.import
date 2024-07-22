@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dasfkxsy00c6w"
-path="res://.godot/imported/input_arrow.png-6d4df2ee081410b1c9582fe5a05c51c1.ctex"
+uid="uid://d050sol4scqn7"
+path="res://.godot/imported/space_background_coffee_2.png-96b887c836b8707fe4af4716bf9c269b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/input_arrow.png"
-dest_files=["res://.godot/imported/input_arrow.png-6d4df2ee081410b1c9582fe5a05c51c1.ctex"]
+source_file="res://Levels/space_background_coffee_2.png"
+dest_files=["res://.godot/imported/space_background_coffee_2.png-96b887c836b8707fe4af4716bf9c269b.ctex"]
 
 [params]
 

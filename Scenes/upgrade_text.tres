@@ -1,6 +1,9 @@
-[gd_resource type="Theme" format=3 uid="uid://dmt2060hchuxn"]
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dmt2060hchuxn"]
+
+[ext_resource type="FontFile" uid="uid://dxg4nni4ox4b6" path="res://UI/Font/Jumpers-V44D6.otf" id="1_xmk50"]
 
 [resource]
+default_font = ExtResource("1_xmk50")
 Label/colors/font_color = Color(0.294118, 0.501961, 0.709804, 1)
 Label/colors/font_shadow_color = Color(1, 1, 1, 1)
 Label/constants/shadow_offset_x = 2

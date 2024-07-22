@@ -818,7 +818,13 @@ visible = false
 z_index = 2
 layout_mode = 1
 
+[node name="ClearButton" parent="SettingsMenu" index="3"]
+visible = false
+disabled = true
+
 [connection signal="pressed" from="Buttons/ResumeBtn" to="." method="_on_resume_btn_pressed"]
 [connection signal="pressed" from="Buttons/MainMenuBtn" to="." method="_on_main_menu_btn_pressed"]
 [connection signal="pressed" from="Buttons/SettingsBtn" to="." method="_on_quit_btn_pressed"]
 [connection signal="hiding" from="SettingsMenu" to="." method="_on_settings_menu_hiding"]
+
+[editable path="SettingsMenu"]

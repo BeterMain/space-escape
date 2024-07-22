@@ -488,6 +488,21 @@ _data = {
 "flash": SubResource("Animation_30upg")
 }
 
+[sub_resource type="Animation" id="Animation_kboxr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShootText:mesh:pixel_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.05]
+}
+
 [sub_resource type="Animation" id="Animation_f3mpf"]
 resource_name = "show_shoot_control"
 length = 2.0
@@ -503,21 +518,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.01, 0.03, 0.01]
-}
-
-[sub_resource type="Animation" id="Animation_kboxr"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ShootText:mesh:pixel_size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.05]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_p84vv"]
@@ -880,7 +880,7 @@ billboard_mode = 1
 
 [sub_resource type="TextMesh" id="TextMesh_44pcg"]
 material = SubResource("StandardMaterial3D_iik7h")
-text = "Press Space/RB to Shoot"
+text = "Press K/L/RB to Shoot"
 pixel_size = 0.05
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_60xkn"]
@@ -1066,6 +1066,7 @@ transform = Transform3D(0.66, 0, 0, 0, 0.66, 0, 0, 0, 0.66, 0.218405, 0, 0.04782
 visible = false
 collision_layer = 256
 collision_mask = 8
+damage = 10.0
 
 [node name="CollisionShape3D" parent="HurtBox" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00469959, 0.00604632, -0.113758)
@@ -1111,6 +1112,7 @@ bus = &"Sound Effects"
 
 [node name="ShootText" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.417029, -1.11734)
+visible = false
 mesh = SubResource("TextMesh_44pcg")
 
 [node name="SpeedParticles" type="CPUParticles3D" parent="."]
@@ -1154,6 +1156,9 @@ linear_accel_min = 2.0
 linear_accel_max = 6.08
 scale_amount_min = 0.5
 scale_amount_max = 0.75
+
+[node name="AudioListener3D" type="AudioListener3D" parent="."]
+current = true
 
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="finished" from="ThrusterSFX" to="." method="_on_thruster_sfx_finished"]

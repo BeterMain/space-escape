@@ -1,0 +1,240 @@
+[gd_scene load_steps=20 format=3 uid="uid://b0bekvutcnwwa"]
+
+[ext_resource type="Script" path="res://Enemies/animal.gd" id="1_yui4e"]
+[ext_resource type="PackedScene" uid="uid://cs4pdnl4db0o1" path="res://Colliders/hurt_box.tscn" id="2_0x7bv"]
+[ext_resource type="PackedScene" uid="uid://eaghfdf4sn4" path="res://Imports/Goat/scene.gltf" id="2_brem7"]
+[ext_resource type="PackedScene" uid="uid://dv0jq3pemcjyr" path="res://Colliders/hit_box.tscn" id="3_uex7i"]
+[ext_resource type="PackedScene" uid="uid://btfydm00tpmrs" path="res://Scenes/stats.tscn" id="4_bp346"]
+[ext_resource type="AudioStream" uid="uid://bt3ctgky2ndww" path="res://Audio/SFXs/Enemies/goat_sound.wav" id="6_qgp27"]
+[ext_resource type="AudioStream" uid="uid://03hb7bxqqs57" path="res://Audio/SFXs/Enemies/animal_hit.wav" id="7_wb1iu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vdl1h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ngcb1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xuo5w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_irpjd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kh61d"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lmerx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mj6s5"]
+size = Vector3(0.627472, 1.43604, 2.37817)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ied14"]
+size = Vector3(0.680322, 2.4, 1.20116)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ht4lu"]
+size = Vector3(0.792358, 1.29601, 2.46533)
+
+[sub_resource type="Animation" id="Animation_awhu0"]
+resource_name = "flash"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FlashMesh:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_sgfcj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FlashMesh:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5fwh5"]
+_data = {
+"RESET": SubResource("Animation_sgfcj"),
+"flash": SubResource("Animation_awhu0")
+}
+
+[node name="Goat" type="CharacterBody3D" node_paths=PackedStringArray("flash_animation_player", "stats", "animal_sound_effect")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_yui4e")
+SPEED = 150
+flash_animation_player = NodePath("FlashAnimationPlayer")
+stats = NodePath("Stats")
+animal_sound_effect = NodePath("GoatSound")
+
+[node name="Mesh" parent="." instance=ExtResource("2_brem7")]
+transform = Transform3D(-1.09278e-08, 0, 0.25, 0, 0.25, 0, -0.25, 0, -1.09278e-08, 0, 0, 0)
+
+[node name="Plane_0" parent="Mesh/Sketchfab_model/Root/Plane" index="0"]
+transform = Transform3D(1.2, -1.26218e-29, -8.52651e-14, 0, 0.8, 4.24257e-31, 0, 3.39406e-31, 1, 0, 0, 0)
+
+[node name="Plane_1" parent="Mesh/Sketchfab_model/Root/Plane" index="1"]
+transform = Transform3D(1.03434, -8.20415e-29, -3.33955e-13, 5.1276e-30, 1, 4.00548e-31, 2.30926e-14, 4.24256e-31, 0.944119, -1.46864, -0.370044, -2.30515e-08)
+
+[node name="Plane_2" parent="Mesh/Sketchfab_model/Root/Plane" index="2"]
+transform = Transform3D(1.20679, -6.31089e-29, -2.84217e-13, 0, 1, 4.24256e-31, 0, 4.24256e-31, 1, 0.0794456, 0.530505, 1.24695e-09)
+
+[node name="Icosphere_0" parent="Mesh/Sketchfab_model/Root/Plane/Icosphere" index="0"]
+transform = Transform3D(2.4, 1.77636e-13, -2.52435e-29, 2.13163e-14, 2.16, -7.21237e-31, -4.73317e-30, -9.16396e-31, 1.7, -5.34513, 0.717903, -1.08795)
+visible = false
+
+[node name="Icosphere_001_0" parent="Mesh/Sketchfab_model/Root/Plane/Icosphere_001" index="0"]
+visible = false
+
+[node name="FlashMesh" parent="." instance=ExtResource("2_brem7")]
+transform = Transform3D(-9.83506e-09, 0, 0.225, 0, 0.225, 0, -0.225, 0, -9.83506e-09, 0, 0, 0)
+visible = false
+
+[node name="Plane_0" parent="FlashMesh/Sketchfab_model/Root/Plane" index="0"]
+transform = Transform3D(1.2, -1.26218e-29, -8.52651e-14, 0, 0.8, 4.24257e-31, 0, 3.39406e-31, 1, 0, 0, 0)
+
+[node name="Plane_1" parent="FlashMesh/Sketchfab_model/Root/Plane" index="1"]
+transform = Transform3D(1.03434, -8.20415e-29, -3.33955e-13, 5.1276e-30, 1, 4.00548e-31, 2.30926e-14, 4.24256e-31, 0.944119, -1.46864, -0.370044, -2.30515e-08)
+
+[node name="Plane_2" parent="FlashMesh/Sketchfab_model/Root/Plane" index="2"]
+transform = Transform3D(1.20679, -6.31089e-29, -2.84217e-13, 0, 1, 4.24256e-31, 0, 4.24256e-31, 1, 0.0794456, 0.530505, 1.24695e-09)
+
+[node name="Icosphere_0" parent="FlashMesh/Sketchfab_model/Root/Plane/Icosphere" index="0"]
+transform = Transform3D(2.4, 1.77636e-13, -2.52435e-29, 2.13163e-14, 2.16, -7.21237e-31, -4.73317e-30, -9.16396e-31, 1.7, -5.34513, 0.717903, -1.08795)
+visible = false
+
+[node name="Icosphere_001_0" parent="FlashMesh/Sketchfab_model/Root/Plane/Icosphere_001" index="0"]
+visible = false
+
+[node name="FlashMesh" parent="FlashMesh" instance=ExtResource("2_brem7")]
+transform = Transform3D(-9.83506e-09, 0, 0.225, 0, 0.225, 0, -0.225, 0, -9.83506e-09, 0, 0, 0)
+visible = false
+
+[node name="Plane_0" parent="FlashMesh/FlashMesh/Sketchfab_model/Root/Plane" index="0"]
+transform = Transform3D(1.2, -1.26218e-29, -8.52651e-14, 0, 0.8, 4.24257e-31, 0, 3.39406e-31, 1, 0, 0, 0)
+
+[node name="Plane_1" parent="FlashMesh/FlashMesh/Sketchfab_model/Root/Plane" index="1"]
+transform = Transform3D(1.03434, -8.20415e-29, -3.33955e-13, 5.1276e-30, 1, 4.00548e-31, 2.30926e-14, 4.24256e-31, 0.944119, -1.46864, -0.370044, -2.30515e-08)
+
+[node name="Plane_2" parent="FlashMesh/FlashMesh/Sketchfab_model/Root/Plane" index="2"]
+transform = Transform3D(1.20679, -6.31089e-29, -2.84217e-13, 0, 1, 4.24256e-31, 0, 4.24256e-31, 1, 0.0794456, 0.530505, 1.24695e-09)
+
+[node name="Icosphere_0" parent="FlashMesh/FlashMesh/Sketchfab_model/Root/Plane/Icosphere" index="0"]
+transform = Transform3D(2.4, 1.77636e-13, -2.52435e-29, 2.13163e-14, 2.16, -7.21237e-31, -4.73317e-30, -9.16396e-31, 1.7, -5.34513, 0.717903, -1.08795)
+visible = false
+
+[node name="Icosphere_001_0" parent="FlashMesh/FlashMesh/Sketchfab_model/Root/Plane/Icosphere_001" index="0"]
+visible = false
+
+[node name="FlashMesh" parent="FlashMesh/FlashMesh" instance=ExtResource("2_brem7")]
+transform = Transform3D(-9.83506e-09, 0, 0.225, 0, 0.225, 0, -0.225, 0, -9.83506e-09, 0, 0, 0)
+visible = false
+
+[node name="Plane_0" parent="FlashMesh/FlashMesh/FlashMesh/Sketchfab_model/Root/Plane" index="0"]
+transform = Transform3D(1.2, -1.26218e-29, -8.52651e-14, 0, 0.8, 4.24257e-31, 0, 3.39406e-31, 1, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_vdl1h")
+
+[node name="Plane_1" parent="FlashMesh/FlashMesh/FlashMesh/Sketchfab_model/Root/Plane" index="1"]
+transform = Transform3D(1.03434, -8.20415e-29, -3.33955e-13, 5.1276e-30, 1, 4.00548e-31, 2.30926e-14, 4.24256e-31, 0.944119, -1.46864, -0.370044, -2.30515e-08)
+surface_material_override/0 = SubResource("StandardMaterial3D_ngcb1")
+
+[node name="Plane_2" parent="FlashMesh/FlashMesh/FlashMesh/Sketchfab_model/Root/Plane" index="2"]
+transform = Transform3D(1.20679, -6.31089e-29, -2.84217e-13, 0, 1, 4.24256e-31, 0, 4.24256e-31, 1, 0.0794456, 0.530505, 1.24695e-09)
+surface_material_override/0 = SubResource("StandardMaterial3D_xuo5w")
+
+[node name="Plane_3" parent="FlashMesh/FlashMesh/FlashMesh/Sketchfab_model/Root/Plane" index="3"]
+surface_material_override/0 = SubResource("StandardMaterial3D_irpjd")
+
+[node name="Icosphere_0" parent="FlashMesh/FlashMesh/FlashMesh/Sketchfab_model/Root/Plane/Icosphere" index="0"]
+transform = Transform3D(2.4, 1.77636e-13, -2.52435e-29, 2.13163e-14, 2.16, -7.21237e-31, -4.73317e-30, -9.16396e-31, 1.7, -5.34513, 0.717903, -1.08795)
+visible = false
+surface_material_override/0 = SubResource("StandardMaterial3D_kh61d")
+
+[node name="Icosphere_001_0" parent="FlashMesh/FlashMesh/FlashMesh/Sketchfab_model/Root/Plane/Icosphere_001" index="0"]
+visible = false
+surface_material_override/0 = SubResource("StandardMaterial3D_lmerx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00279236, 0.106201, 0.26062)
+visible = false
+shape = SubResource("BoxShape3D_mj6s5")
+
+[node name="HurtBox" parent="." instance=ExtResource("2_0x7bv")]
+visible = false
+collision_layer = 16
+collision_mask = 2080
+damage = 1.0
+
+[node name="CollisionShape3D" parent="HurtBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.00252682, 0.138092, 0.247421)
+shape = SubResource("BoxShape3D_ied14")
+
+[node name="HitBox" parent="." instance=ExtResource("3_uex7i")]
+collision_layer = 2056
+collision_mask = 272
+damage = 1.5
+
+[node name="CollisionShape3D" parent="HitBox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00669245, 0.129136, 0.254374)
+shape = SubResource("BoxShape3D_ht4lu")
+
+[node name="Stats" parent="." instance=ExtResource("4_bp346")]
+max_health = 3.0
+
+[node name="FlashAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5fwh5")
+}
+
+[node name="GoatSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_qgp27")
+volume_db = -15.0
+bus = &"Sound Effects"
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_wb1iu")
+bus = &"Sound Effects"
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="no_health" from="Stats" to="." method="_on_stats_no_health"]
+
+[editable path="Mesh"]
+[editable path="FlashMesh"]
+[editable path="FlashMesh/FlashMesh"]
+[editable path="FlashMesh/FlashMesh/FlashMesh"]
+[editable path="HurtBox"]
+[editable path="HitBox"]

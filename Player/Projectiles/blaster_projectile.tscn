@@ -115,7 +115,7 @@ autoplay = "spin"
 
 [node name="SFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_hwaf7")
-volume_db = -2.0
+volume_db = -10.0
 pitch_scale = 2.38
 autoplay = true
 bus = &"Sound Effects"

@@ -230,7 +230,6 @@ _data = {
 [node name="Level" type="Node3D"]
 script = ExtResource("1_psk07")
 level_speed = 0.005
-growth_offset = 5.0
 required_wins = 1
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
@@ -318,23 +317,20 @@ transform = Transform3D(18.6393, 0, 0, 0, 9.86784, 0, 0, 0, 1.0212, 0, 0, 3.4948
 skeleton = NodePath("../../../..")
 
 [node name="B_ObstaclePit2" parent="SubViewportContainer/SubViewport/ObstaclePits" instance=ExtResource("7_myw4h")]
-transform = Transform3D(-8.14748e-07, 0, 1.0212, 0, 9.86784, 0, -18.6393, 0, -4.46381e-08, 9.36983, 0, -5.36322)
+transform = Transform3D(-9.64769e-07, 0, 1.0212, 0, 9.86784, 0, -22.0714, 0, -4.46381e-08, 9.36983, 0, -5.36322)
 skeleton = NodePath("../../../..")
 
 [node name="L_ObstaclePit" parent="SubViewportContainer/SubViewport/ObstaclePits" instance=ExtResource("7_myw4h")]
-transform = Transform3D(-8.14748e-07, 0, 1.0212, 0, 9.86784, 0, -18.6393, 0, -4.46381e-08, -8.42555, 0, -5.27476)
+transform = Transform3D(-9.67958e-07, 0, 1.0212, 0, 9.86784, 0, -22.1443, 0, -4.46381e-08, -8.42555, 0, -5.27476)
 skeleton = NodePath("../../../..")
 
 [node name="ProjectilePit" parent="SubViewportContainer/SubViewport" instance=ExtResource("7_myw4h")]
-transform = Transform3D(14.4297, 0, 0, 0, 9.86784, 0, 0, 0, 1.0212, 0, 0, -13.5052)
+transform = Transform3D(23.3335, 0, 0, 0, 9.86784, 0, 0, 0, 1.0212, 0, 0, -16.1914)
 skeleton = NodePath("../../..")
 
 [node name="Player" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_3yf6k")]
 transform = Transform3D(0.66, 0, 0, 0, 0.66, 0, 0, 0, 0.66, -0.15, 0, 1.296)
 invincibility_duration = 1.0
-
-[node name="BossSpawnLoc" type="Marker3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15333, 0, -4.98554)
 
 [node name="WaitTimer" type="Timer" parent="SubViewportContainer/SubViewport"]
 one_shot = true
@@ -348,10 +344,10 @@ autostart = true
 wait_time = 2.0
 one_shot = true
 
-[node name="FullUI" parent="." instance=ExtResource("6_cs6af")]
+[node name="BossSpawnLoc" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15333, 0, -4.98554)
 
-[node name="BossHealthbar" parent="FullUI/Control/BossHealthTxt" index="0"]
-offset_bottom = 27.0
+[node name="FullUI" parent="." instance=ExtResource("6_cs6af")]
 
 [node name="BGM" parent="." instance=ExtResource("9_g5rly")]
 autoplay = false
@@ -384,4 +380,7 @@ autoplay = "default"
 [connection signal="timeout" from="SubViewportContainer/SubViewport/DeathTimer" to="." method="_on_death_timer_timeout"]
 
 [editable path="FullUI"]
+[editable path="FullUI/Control/PlayerHealthbar"]
+[editable path="FullUI/Control/BoostBar"]
 [editable path="FullUI/PauseMenu"]
+[editable path="FullUI/PauseMenu/SettingsMenu"]

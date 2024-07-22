@@ -8,6 +8,8 @@ const EFFECT = preload("res://Pickups/coin_effect.tscn")
 var SPEED = SPEED_MAX
 var direction = 1
 
+var player = null
+
 @export var value = 100
 
 func _ready():
@@ -22,9 +24,12 @@ func _ready():
 	SPEED = randi_range(SPEED_MAX/2, SPEED_MAX)
 
 func _physics_process(delta):
-	
-	velocity.z = SPEED * delta
-	velocity.x = SPEED * direction * delta
+	if not player:
+		velocity.z = SPEED * delta
+		velocity.x = SPEED * direction * delta
+	else:
+		direction = position.direction_to(player.position).normalized()
+		velocity = SPEED * direction * delta
 
 	move_and_slide()
 
@@ -51,3 +56,7 @@ func _on_hurt_box_body_entered(body):
 	
 func _on_hurt_box_area_entered(_area):
 	die()
+
+func _on_detection_radius_body_entered(body):
+	player = body
+	SPEED *= 1.5

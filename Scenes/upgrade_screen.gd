@@ -51,15 +51,11 @@ func _ready():
 		blaster_btn.disabled = true
 	else:
 		blaster_txt.text = "??????????????"
-		blaster_cost_txt.text = str(Supervisor.blaster_cost)
+		blaster_cost_txt.text = "$" + str(Supervisor.blaster_cost)
 	
 
 func _process(_delta):
 	# TODO: Add ability to have player model react to upgrades
-	
-	if Input.is_action_just_pressed("test"):
-		Supervisor.current_cash += 5000
-		update_text()
 	
 	if Input.is_action_just_pressed("ui_right") or Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_down"):
 		sfx.stream = SELECT

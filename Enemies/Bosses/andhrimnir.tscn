@@ -1,0 +1,25 @@
+[gd_scene load_steps=7 format=3 uid="uid://cr25wq63xlctd"]
+
+[ext_resource type="PackedScene" uid="uid://caivxbdo8mfw6" path="res://Enemies/Bosses/dug.tscn" id="1_okl78"]
+[ext_resource type="Texture2D" uid="uid://4pe6w86muhtr" path="res://Enemies/Bosses/andhrimnir.png" id="2_byrn1"]
+[ext_resource type="Script" path="res://Enemies/Bosses/andhrimnir.gd" id="3_ml80p"]
+[ext_resource type="AudioStream" uid="uid://cy7wrg2r58u73" path="res://Audio/SFXs/Bosses/andhrimnir_opening_3.mp3" id="4_twpd7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pw4d0"]
+albedo_texture = ExtResource("2_byrn1")
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_h5qj7"]
+material = SubResource("StandardMaterial3D_pw4d0")
+
+[node name="Abdhrimnir" instance=ExtResource("1_okl78")]
+mesh = SubResource("QuadMesh_h5qj7")
+script = ExtResource("3_ml80p")
+hunger_duration = 20.0
+revenge_duration = 15.0
+
+[node name="VoiceLineSFX" parent="." index="4"]
+stream = ExtResource("4_twpd7")
+volume_db = 3.0
+
+[editable path="HurtBox"]

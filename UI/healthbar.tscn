@@ -36,8 +36,10 @@ anti_aliasing = false
 
 [node name="Healthbar" type="ProgressBar"]
 z_index = 1
+custom_minimum_size = Vector2(0, 20)
 offset_right = 240.0
 offset_bottom = 4.0
+size_flags_vertical = 4
 theme_override_styles/background = SubResource("StyleBoxEmpty_76104")
 theme_override_styles/fill = SubResource("StyleBoxFlat_mndfk")
 value = 50.0

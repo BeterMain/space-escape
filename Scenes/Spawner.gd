@@ -3,7 +3,10 @@ extends Node
 # Const vars
 const ASTERIOD = preload("res://Obstacles/asteriod.tscn")
 const UFO = preload("res://Obstacles/ufo.tscn")
+const FRYING_PAN = preload("res://Obstacles/frying_pan.tscn")
+const KNIFE = preload("res://Obstacles/knife.tscn")
 const COIN = preload("res://Pickups/coin.tscn")
+const BOAR = preload("res://Enemies/boar.tscn")
 
 # Onready vars
 @onready var obstacle_spawn_timer = $ObstacleSpawnTimer
@@ -24,6 +27,9 @@ var double_speed = false
 var trail_active = false
 var chase_active = false
 var boss_started = false
+var event_ragnarok = false
+var can_spawn_boar = false
+var num_boar = 0
 
 var only_ufo = false
 var only_asteriod = false
@@ -32,6 +38,7 @@ var double_money = false
 var stopped = true
 
 var obstacle_choices = [ASTERIOD, ASTERIOD, ASTERIOD, ASTERIOD, ASTERIOD, ASTERIOD, ASTERIOD, UFO]
+var ragnarok_obstacle_choices = [KNIFE, FRYING_PAN]
 
 func _process(_delta):
 	
@@ -45,16 +52,23 @@ func spawn_obstacle():
 	var spawn_index = randi_range(0, 6/interval)
 	var OBSTACLE = null
 	
-	if spawn_index == 0 and not boss_started:
-		OBSTACLE = COIN
-	else:
-		if only_ufo:
-			OBSTACLE = UFO
-		elif only_asteriod:
-			OBSTACLE = ASTERIOD
+	if not event_ragnarok:
+		if spawn_index == 0 and not boss_started:
+			OBSTACLE = COIN
 		else:
-			OBSTACLE = obstacle_choices.pick_random()
-			obstacle_choices.shuffle()
+			if only_ufo:
+				OBSTACLE = UFO
+			elif only_asteriod:
+				OBSTACLE = ASTERIOD
+			else:
+				OBSTACLE = obstacle_choices.pick_random()
+				obstacle_choices.shuffle()
+	else:
+		if spawn_index == 0 and not boss_started:
+			OBSTACLE = COIN
+		else:
+			OBSTACLE = ragnarok_obstacle_choices.pick_random()
+			ragnarok_obstacle_choices.shuffle()
 	
 	var obstacle = OBSTACLE.instantiate()
 	
@@ -100,6 +114,23 @@ func stop_spawning():
 	stopped = true
 
 # Funcs for events
+func set_ragnarok(value):
+	event_ragnarok = value
+
+func set_spawn_boar(active):
+	if active and not can_spawn_boar:
+		can_spawn_boar = active
+		spawn_boar()
+	else:
+		can_spawn_boar = active
+
+func spawn_boar():
+	var boar = BOAR.instantiate()
+	obstacle_spawn_location.progress_ratio = randf()
+	boar.position = obstacle_spawn_location.position
+	boar.direction = Vector3.BACK
+	add_child(boar)
+
 func set_only_ufos(value):
 	# Set to value
 	only_ufo = value

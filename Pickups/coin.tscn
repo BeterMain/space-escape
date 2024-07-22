@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bx3s7x5dpa37c"]
+[gd_scene load_steps=12 format=3 uid="uid://bx3s7x5dpa37c"]
 
 [ext_resource type="Script" path="res://Pickups/coin.gd" id="1_tkg3t"]
 [ext_resource type="Texture2D" uid="uid://bs23b0nhkwkyi" path="res://Pickups/coin_texture.png" id="2_5ag05"]
@@ -58,6 +58,9 @@ _data = {
 "rotate": SubResource("Animation_amkxb")
 }
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_84lie"]
+radius = 2.0673
+
 [node name="Coin" type="CharacterBody3D"]
 transform = Transform3D(0.25, 0, 0, 0, -1.09278e-08, -0.25, 0, 0.25, -1.09278e-08, 0, 0, 0)
 collision_layer = 1024
@@ -86,7 +89,15 @@ libraries = {
 }
 autoplay = "rotate"
 
+[node name="DetectionRadius" type="Area3D" parent="."]
+collision_layer = 64
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionRadius"]
+shape = SubResource("SphereShape3D_84lie")
+
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="body_entered" from="HurtBox" to="." method="_on_hurt_box_body_entered"]
+[connection signal="body_entered" from="DetectionRadius" to="." method="_on_detection_radius_body_entered"]
 
 [editable path="HurtBox"]

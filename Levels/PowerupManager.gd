@@ -53,6 +53,7 @@ func _process(_delta):
 				offset += -0.5
 	
 	# Handle powerup management
+	
 	match current_powerup:
 		# Common powerups
 		"apple":
@@ -117,8 +118,6 @@ func orange_powerup():
 		# Activate ability
 		if can_shoot:
 			shoot(ORANGE_BEAM, 0, true, Vector3(0, 0, -6.0))
-		
-		BossHealth.health -= 0.001
 
 # Tropical Powerup
 func tropical_powerup():
@@ -149,7 +148,7 @@ func shoot_tropical(rotation, direction):
 	
 	# Check for player
 	if player:
-		projectile.position = player.projectile_spawn.position
+		projectile.position = player.projectile_spawn.global_position
 	else:
 		projectile.position = Vector3.ZERO
 	

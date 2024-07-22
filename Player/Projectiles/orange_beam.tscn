@@ -67,7 +67,7 @@ collision_layer = 8192
 collision_mask = 0
 motion_mode = 1
 script = ExtResource("1_yey5r")
-boss_damage = 0.001
+boss_damage = 0.0
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1.192, 0, 0, 0, 1, 0, 0, 0, 1.223, 0, 0, 0)

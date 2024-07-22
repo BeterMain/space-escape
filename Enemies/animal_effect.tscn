@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://dtwyui7v0kfn1"]
+
+[ext_resource type="Script" path="res://Obstacles/asteriod_effect.gd" id="1_5csy0"]
+[ext_resource type="AudioStream" uid="uid://dwbt254kmc4o6" path="res://Audio/SFXs/Enemies/animal_death.wav" id="2_tj4et"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_t0x8p"]
+lifetime_randomness = 0.46
+particle_flag_align_y = true
+emission_shape = 1
+emission_sphere_radius = 0.2
+spread = 180.0
+initial_velocity_min = 20.0
+initial_velocity_max = 25.0
+gravity = Vector3(0, -5, 0)
+scale_min = 0.1
+scale_max = 0.13
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vpywb"]
+albedo_color = Color(0.878431, 0.137255, 0.14902, 1)
+metallic = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_itm5h"]
+material = SubResource("StandardMaterial3D_vpywb")
+
+[node name="AnimalEffect" type="Node3D"]
+transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0, 0)
+script = ExtResource("1_5csy0")
+
+[node name="Particles" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 10
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_t0x8p")
+draw_pass_1 = SubResource("SphereMesh_itm5h")
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_tj4et")
+volume_db = -10.0
+autoplay = true
+bus = &"Sound Effects"
+
+[connection signal="finished" from="Particles" to="." method="_on_particles_finished"]

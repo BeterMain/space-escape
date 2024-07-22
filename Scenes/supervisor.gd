@@ -20,7 +20,7 @@ var current_distance = 0
 var highscore_distance = 0
 
 var blaster_unlocked = false
-var blaster_cost = 5000
+var blaster_cost = 10000
 
 # Level vars
 var next_event = ""

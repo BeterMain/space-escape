@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cfayr4kahbxuw"]
+[gd_scene load_steps=22 format=3 uid="uid://cfayr4kahbxuw"]
 
 [ext_resource type="PackedScene" uid="uid://dymj7wkj285j5" path="res://Player/bubble_shockwave.tscn" id="1_jihx7"]
 [ext_resource type="Script" path="res://Scenes/shader_cache.gd" id="1_t1rgf"]
@@ -12,6 +12,13 @@
 [ext_resource type="PackedScene" uid="uid://ctirivsy742hl" path="res://Player/Projectiles/banana_projectile.tscn" id="9_dpqbw"]
 [ext_resource type="PackedScene" uid="uid://oqeucqvdblsi" path="res://Player/Projectiles/orange_beam.tscn" id="10_e7gsg"]
 [ext_resource type="PackedScene" uid="uid://d23d0sdb50mi4" path="res://Player/Projectiles/tropical_rocket.tscn" id="11_4dhbt"]
+[ext_resource type="PackedScene" uid="uid://bl1g1bq0ckp83" path="res://Obstacles/frying_pan.tscn" id="13_64bpc"]
+[ext_resource type="PackedScene" uid="uid://okpi8l4jjce0" path="res://Obstacles/knife.tscn" id="14_uboc0"]
+[ext_resource type="PackedScene" uid="uid://d3f4lsf05xl65" path="res://Player/Projectiles/blaster_projectile.tscn" id="15_o6lwm"]
+[ext_resource type="PackedScene" uid="uid://c202p7gkg6eq3" path="res://Enemies/boar.tscn" id="16_l0wgx"]
+[ext_resource type="PackedScene" uid="uid://dtwyui7v0kfn1" path="res://Enemies/animal_effect.tscn" id="17_1wq80"]
+[ext_resource type="PackedScene" uid="uid://b0bekvutcnwwa" path="res://Enemies/goat.tscn" id="18_xfwbm"]
+[ext_resource type="PackedScene" uid="uid://bj1it2djv3bp0" path="res://Enemies/Bosses/vines.tscn" id="19_o72np"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dys10"]
 bg_color = Color(0.184314, 0.184314, 0.184314, 1)
@@ -77,7 +84,7 @@ current = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.61159)
 
 [node name="Coin" parent="Camera3D" instance=ExtResource("2_cm8xg")]
-transform = Transform3D(0.25, 0, 0, 0, -1.09278e-08, -0.25, 0, 0.25, -1.09278e-08, 0, 0, -1.61159)
+transform = Transform3D(0.25, 0, 0, 0, -1.09278e-08, -0.25, 0, 0.25, -1.09278e-08, 0, 0, -11.1635)
 
 [node name="CoinEffect" parent="Camera3D" instance=ExtResource("3_ae563")]
 transform = Transform3D(0.03125, 0, 0, 0, -1.36597e-09, -0.03125, 0, 0.03125, -1.36597e-09, 0, 0, -1.61159)
@@ -85,7 +92,7 @@ transform = Transform3D(0.03125, 0, 0, 0, -1.36597e-09, -0.03125, 0, 0.03125, -1
 [node name="Asteriod" parent="Camera3D" instance=ExtResource("4_eo0ju")]
 transform = Transform3D(0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, 0, 0, -1.61159)
 
-[node name="SpeedParticles" parent="Camera3D/Asteriod" index="6"]
+[node name="SpeedParticles" parent="Camera3D/Asteriod" index="7"]
 emitting = true
 
 [node name="AsteriodEffect" parent="Camera3D" instance=ExtResource("5_rqbno")]
@@ -97,7 +104,7 @@ transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, -1.61159)
 [node name="Player" parent="Camera3D" instance=ExtResource("7_gwoh1")]
 transform = Transform3D(0.66, 0, 0, 0, 0.66, 0, 0, 0, 0.66, 0, 0, -1.61159)
 
-[node name="SpeedParticles" parent="Camera3D/Player" index="13"]
+[node name="SpeedParticles" parent="Camera3D/Player" index="16"]
 emitting = true
 
 [node name="AppleRocket" parent="Camera3D" instance=ExtResource("8_ydcxh")]
@@ -112,6 +119,27 @@ transform = Transform3D(0.25, 0, 0, 0, 2.98122e-09, 0.25, 0, -0.25, 2.98122e-09,
 [node name="TropicalRocket" parent="Camera3D" instance=ExtResource("11_4dhbt")]
 transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0, -1.61159)
 
+[node name="FryingPan" parent="Camera3D" instance=ExtResource("13_64bpc")]
+transform = Transform3D(0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, 0, 0, -0.402452)
+
+[node name="Knife" parent="Camera3D" instance=ExtResource("14_uboc0")]
+transform = Transform3D(0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, 0, 0, -0.310719)
+
+[node name="BlasterProjectile" parent="Camera3D" instance=ExtResource("15_o6lwm")]
+transform = Transform3D(0.5, 0, 0, 0, -0.5, 4.37114e-08, 0, -4.37114e-08, -0.5, 0.000607967, -0.0820152, -0.417542)
+
+[node name="Boar" parent="Camera3D" instance=ExtResource("16_l0wgx")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, -2.81399)
+
+[node name="AnimalEffect" parent="Camera3D" instance=ExtResource("17_1wq80")]
+transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0, -0.973604)
+
+[node name="Goat" parent="Camera3D" instance=ExtResource("18_xfwbm")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, -4.32713)
+
+[node name="Vines" parent="Camera3D" instance=ExtResource("19_o72np")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -4.74567)
+
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 autostart = true
@@ -119,6 +147,7 @@ autostart = true
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 
 [editable path="Camera3D/Asteriod"]
+[editable path="Camera3D/Asteriod/SpinPivot/MeshInstance3D/white_blockbench_export"]
 [editable path="Camera3D/Asteriod/MainHitBox"]
 [editable path="Camera3D/Asteriod/HurtBox"]
 [editable path="Camera3D/Asteriod/TrailHitBox"]

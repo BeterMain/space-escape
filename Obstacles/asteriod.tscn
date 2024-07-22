@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cioix0ohvn8j"]
+[gd_scene load_steps=21 format=3 uid="uid://cioix0ohvn8j"]
 
 [ext_resource type="Script" path="res://Obstacles/asteriod.gd" id="1_drbhr"]
 [ext_resource type="PackedScene" uid="uid://dv0jq3pemcjyr" path="res://Colliders/hit_box.tscn" id="1_ihc0m"]
@@ -8,6 +8,8 @@
 [ext_resource type="Shader" path="res://Pickups/rainbow.gdshader" id="5_genvt"]
 [ext_resource type="AudioStream" uid="uid://mitav5lsudvr" path="res://Audio/SFXs/Obstacle/asteriodHit.wav" id="7_7q4s5"]
 [ext_resource type="Texture2D" uid="uid://bnypuailo1uh5" path="res://Obstacles/speed_arrow.png" id="8_wv05g"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7osd8"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_anbqh"]
 
@@ -33,6 +35,67 @@ shader_parameter/face_color = Vector3(0, 1, 1)
 material = SubResource("ShaderMaterial_i2kll")
 shape = 0
 
+[sub_resource type="Animation" id="Animation_vpqy3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpinPivot/MeshInstance3D/blockbench_export:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpinPivot/MeshInstance3D/white_blockbench_export:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_b6l3w"]
+resource_name = "flash"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpinPivot/MeshInstance3D/blockbench_export:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpinPivot/MeshInstance3D/white_blockbench_export:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6vhyq"]
+_data = {
+"RESET": SubResource("Animation_vpqy3"),
+"flash": SubResource("Animation_b6l3w")
+}
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bxigj"]
 transparency = 1
 diffuse_mode = 3
@@ -46,12 +109,13 @@ particles_anim_loop = false
 material = SubResource("StandardMaterial3D_bxigj")
 size = Vector2(0.1, 0.1)
 
-[node name="Asteriod" type="CharacterBody3D" node_paths=PackedStringArray("sfx")]
+[node name="Asteriod" type="CharacterBody3D" node_paths=PackedStringArray("sfx", "animation_player")]
 transform = Transform3D(0.33, 0, 0, 0, 0.33, 0, 0, 0, 0.33, 0, 0, 0)
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("1_drbhr")
 sfx = NodePath("SFX")
+animation_player = NodePath("FlashAnimationPlayer")
 
 [node name="SpinPivot" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 0, 0, 0)
@@ -61,6 +125,12 @@ visibility_range_end = 117.03
 
 [node name="blockbench_export" parent="SpinPivot/MeshInstance3D" instance=ExtResource("2_p4ccy")]
 transform = Transform3D(1.75, 0, 0, 0, 1.75, 0, 0, 0, 1.75, 0, -0.447883, 0)
+
+[node name="white_blockbench_export" parent="SpinPivot/MeshInstance3D" instance=ExtResource("2_p4ccy")]
+transform = Transform3D(1.25, 0, -8.52651e-14, 0, 1.25, 0, 8.52651e-14, 0, 1.25, 0, -0.288625, 0)
+
+[node name="body" parent="SpinPivot/MeshInstance3D/white_blockbench_export/Node" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_7osd8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_anbqh")
@@ -79,7 +149,7 @@ transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
 visible = false
 collision_layer = 16
 collision_mask = 133152
-damage = 2
+damage = 1.0
 
 [node name="CollisionShape3D" parent="HurtBox" index="0"]
 shape = SubResource("SphereShape3D_7ogoq")
@@ -99,6 +169,11 @@ disabled = true
 [node name="TrailMesh" type="MeshInstance3D" parent="TrailHitBox"]
 transform = Transform3D(1.26066, -2.30926e-14, -4.76456e-22, 0, -2.20129e-08, 0.251798, -6.03961e-14, -0.503596, -1.10064e-08, 0.856171, 0, -1.15773e-09)
 mesh = SubResource("RibbonTrailMesh_dyfuq")
+
+[node name="FlashAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6vhyq")
+}
 
 [node name="SpeedParticles" type="CPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.242108, 0)
@@ -131,6 +206,7 @@ bus = &"Sound Effects"
 [connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
 [connection signal="no_health" from="Stats" to="." method="_on_stats_no_health"]
 
+[editable path="SpinPivot/MeshInstance3D/white_blockbench_export"]
 [editable path="MainHitBox"]
 [editable path="HurtBox"]
 [editable path="TrailHitBox"]

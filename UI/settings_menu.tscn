@@ -29,6 +29,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_i68tp")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
@@ -40,6 +41,7 @@ theme_override_constants/separation = 100
 
 [node name="VolumeLabels" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Volume"]
 layout_mode = 2
+theme_override_constants/separation = 13
 
 [node name="MasterTxt" type="Label" parent="CenterContainer/VBoxContainer/Volume/VolumeLabels"]
 layout_mode = 2
@@ -85,6 +87,7 @@ step = 0.01
 [node name="BGMVolume" type="HSlider" parent="CenterContainer/VBoxContainer/Volume/VolumeSliders"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("2_i68tp")
 max_value = 4.0
 step = 0.01
 value = 3.0
@@ -92,6 +95,7 @@ value = 3.0
 [node name="SFXVolume" type="HSlider" parent="CenterContainer/VBoxContainer/Volume/VolumeSliders"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("2_i68tp")
 max_value = 2.0
 step = 0.01
 value = 1.0
@@ -99,6 +103,7 @@ value = 1.0
 [node name="VoiceLineVolume" type="HSlider" parent="CenterContainer/VBoxContainer/Volume/VolumeSliders"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+theme = ExtResource("2_i68tp")
 min_value = -10.0
 max_value = 10.0
 step = 0.01
@@ -110,7 +115,7 @@ theme_override_constants/separation = 150
 
 [node name="ResolutionLabel" type="VBoxContainer" parent="CenterContainer/VBoxContainer/ScreenResolution"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 33
 
 [node name="ResolutionTxt" type="Label" parent="CenterContainer/VBoxContainer/ScreenResolution/ResolutionLabel"]
 layout_mode = 2
@@ -147,42 +152,47 @@ popup/item_3/id = 3
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 theme = ExtResource("2_i68tp")
+theme_override_font_sizes/font_size = 30
 button_pressed = true
+text = "ON"
 
 [node name="FPSCheckbox" type="CheckBox" parent="CenterContainer/VBoxContainer/ScreenResolution/ResolutionOptions"]
 layout_mode = 2
+theme = ExtResource("2_i68tp")
 theme_override_font_sizes/font_size = 30
 button_pressed = true
 text = "Display FPS"
 
 [node name="BackButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 138.0
-offset_top = 91.0
-offset_right = 297.0
-offset_bottom = 125.0
+offset_left = 79.0
+offset_top = 72.0
+offset_right = 238.0
+offset_bottom = 114.0
+theme = ExtResource("2_i68tp")
 text = "Back"
 
 [node name="ClearButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 1663.0
+offset_left = 1396.0
 offset_top = 1006.0
-offset_right = 1878.0
-offset_bottom = 1041.0
+offset_right = 1908.0
+offset_bottom = 1050.0
+theme = ExtResource("2_i68tp")
 text = "Delete Save Data"
 
 [node name="ConfirmButton" type="Button" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 1663.0
-offset_top = 1006.0
-offset_right = 1878.0
-offset_bottom = 1041.0
+offset_left = 1452.0
+offset_top = 1008.0
+offset_right = 1873.0
+offset_bottom = 1052.0
+theme = ExtResource("2_i68tp")
 disabled = true
 text = "Are You Sure?"
 
 [node name="SFX" type="AudioStreamPlayer" parent="."]
-volume_db = -5.0
 bus = &"Sound Effects"
 
 [connection signal="value_changed" from="CenterContainer/VBoxContainer/Volume/VolumeSliders/MasterVolume" to="." method="_on_master_volume_value_changed"]

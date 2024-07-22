@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bsv73wh3nrv21"]
+[gd_scene load_steps=25 format=3 uid="uid://bsv73wh3nrv21"]
 
 [ext_resource type="Script" path="res://Scenes/upgrade_screen.gd" id="1_jqj8d"]
 [ext_resource type="PackedScene" uid="uid://dgqsn6rnymrcx" path="res://Levels/events_manager.tscn" id="3_2i6k4"]
@@ -6,6 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://bpe5luvm6v45x" path="res://UI/debug_ui.tscn" id="3_apeeu"]
 [ext_resource type="AudioStream" uid="uid://c6020vyqi5lt4" path="res://Audio/BGM/Upgrade_Screen.wav" id="3_tsiih"]
 [ext_resource type="Theme" uid="uid://dmt2060hchuxn" path="res://Scenes/upgrade_text.tres" id="4_64see"]
+[ext_resource type="Theme" uid="uid://e2l5i4dbx8m8" path="res://UI/upgrade_menu_theme.tres" id="5_0o3l6"]
+[ext_resource type="FontFile" uid="uid://dc37pd247h0sh" path="res://UI/Font/Jumpers3DItalic-G33nm.otf" id="6_o45xw"]
+[ext_resource type="FontFile" uid="uid://dxg4nni4ox4b6" path="res://UI/Font/Jumpers-V44D6.otf" id="8_ba4jg"]
+[ext_resource type="Theme" uid="uid://den0jy5apluvv" path="res://UI/main_menu_theme.tres" id="9_jblt0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j2uo2"]
 albedo_color = Color(0, 0, 0, 1)
@@ -14,18 +18,16 @@ roughness = 0.0
 [sub_resource type="PlaneMesh" id="PlaneMesh_idm23"]
 material = SubResource("StandardMaterial3D_j2uo2")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ng1vo"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_srgwt"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_lgqw6"]
-material = SubResource("StandardMaterial3D_ng1vo")
+material = SubResource("StandardMaterial3D_srgwt")
 radius = 0.25
 height = 0.5
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gr1xs"]
-bg_color = Color(0, 0, 0, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_usaq4"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wgm17"]
-bg_color = Color(0, 0, 0, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tds82"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_r74he"]
 color = Color(1, 1, 1, 1)
@@ -34,8 +36,7 @@ grow_end = 3.0
 thickness = 2
 vertical = true
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t6jdi"]
-bg_color = Color(0, 0, 0, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n6bii"]
 
 [sub_resource type="Animation" id="Animation_tf26e"]
 length = 0.001
@@ -75,6 +76,21 @@ _data = {
 "rotate": SubResource("Animation_scrqx")
 }
 
+[sub_resource type="Animation" id="Animation_u7dux"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI/UpgradePanel/CenterContainer/Upgrades/BlasterUpgrade/BlasterCostTxt:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.294118, 0.501961, 0.709804, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_nwark"]
 resource_name = "obtained_blaster"
 length = 1.5
@@ -90,21 +106,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(0.294118, 0.501961, 0.709804, 1), Color(0.905882, 0, 0.215686, 1), Color(0.603922, 0, 0.760784, 1), Color(0.294118, 0.501961, 0.709804, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_u7dux"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("UI/UpgradePanel/CenterContainer/Upgrades/BlasterUpgrade/BlasterCostTxt:theme_override_colors/font_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.294118, 0.501961, 0.709804, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rmsi7"]
@@ -156,14 +157,14 @@ skeleton = NodePath("../../..")
 [node name="Particles" type="CPUParticles3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.02046, 0, -2.68298)
 emitting = false
-amount = 20
-lifetime = 3.07
-preprocess = 1.22
+amount = 40
+lifetime = 4.5
+preprocess = 4.5
 speed_scale = 0.5
 local_coords = true
 mesh = SubResource("SphereMesh_lgqw6")
 emission_shape = 3
-emission_box_extents = Vector3(1, 1.2, 0)
+emission_box_extents = Vector3(1, 2, 0)
 direction = Vector3(-1, 0, 0)
 spread = 0.0
 gravity = Vector3(0, 0, 0)
@@ -183,7 +184,7 @@ anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 934.0
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_gr1xs")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_usaq4")
 
 [node name="CenterContainer" type="CenterContainer" parent="UI/UpgradePanel"]
 layout_mode = 1
@@ -199,10 +200,12 @@ theme_override_constants/separation = 70
 
 [node name="UpgradeTitleTxt" type="Label" parent="UI/UpgradePanel/CenterContainer/Upgrades"]
 layout_mode = 2
+theme = ExtResource("5_0o3l6")
 theme_override_colors/font_color = Color(0.294118, 0.501961, 0.709804, 1)
 theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
 theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 4
+theme_override_fonts/font = ExtResource("6_o45xw")
 theme_override_font_sizes/font_size = 90
 text = "Upgrades"
 horizontal_alignment = 1
@@ -227,6 +230,7 @@ text = "$000"
 [node name="BubbleBtn" type="Button" parent="UI/UpgradePanel/CenterContainer/Upgrades/BubbleUpgrade"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+tooltip_text = "Creates a bubble around the player"
 focus_neighbor_left = NodePath("../../DistanceUpgrade/DistanceBtn")
 focus_neighbor_top = NodePath("../../../../../RestartPanel/HBoxContainer/ContinueBtn")
 focus_neighbor_right = NodePath("../../../../../RestartPanel/HBoxContainer/ContinueBtn")
@@ -253,6 +257,7 @@ text = "$000"
 [node name="DistanceBtn" type="Button" parent="UI/UpgradePanel/CenterContainer/Upgrades/DistanceUpgrade"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+tooltip_text = "Increase the starting distance in the level"
 focus_neighbor_left = NodePath("../../HealthUpgrade/HealthBtn")
 focus_neighbor_top = NodePath("../../BubbleUpgrade/BubbleBtn")
 focus_neighbor_right = NodePath("../../../../../RestartPanel/HBoxContainer/ContinueBtn")
@@ -279,6 +284,7 @@ text = "$000"
 [node name="HealthBtn" type="Button" parent="UI/UpgradePanel/CenterContainer/Upgrades/HealthUpgrade"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+tooltip_text = "Increase player health"
 focus_neighbor_left = NodePath("../../BoostUpgrade/BoostBtn")
 focus_neighbor_top = NodePath("../../DistanceUpgrade/DistanceBtn")
 focus_neighbor_right = NodePath("../../../../../RestartPanel/HBoxContainer/ContinueBtn")
@@ -305,10 +311,11 @@ text = "$000"
 [node name="BoostBtn" type="Button" parent="UI/UpgradePanel/CenterContainer/Upgrades/BoostUpgrade"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+tooltip_text = "Allows the player to boost in any direction with invincibility"
 focus_neighbor_left = NodePath("../../../../../RestartPanel/HBoxContainer/MainMenuBtn")
 focus_neighbor_top = NodePath("../../HealthUpgrade/HealthBtn")
 focus_neighbor_right = NodePath("../../../../../RestartPanel/HBoxContainer/ContinueBtn")
-focus_neighbor_bottom = NodePath("../../../../../RestartPanel/HBoxContainer/MainMenuBtn")
+focus_neighbor_bottom = NodePath("../../BlasterUpgrade/BlasterBtn")
 theme_override_font_sizes/font_size = 50
 text = "+"
 
@@ -332,8 +339,9 @@ text = "$5000"
 [node name="BlasterBtn" type="Button" parent="UI/UpgradePanel/CenterContainer/Upgrades/BlasterUpgrade"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+tooltip_text = "idk what this does"
 focus_neighbor_left = NodePath("../../../../../RestartPanel/HBoxContainer/MainMenuBtn")
-focus_neighbor_top = NodePath("../../HealthUpgrade/HealthBtn")
+focus_neighbor_top = NodePath("../../BoostUpgrade/BoostBtn")
 focus_neighbor_right = NodePath("../../../../../RestartPanel/HBoxContainer/ContinueBtn")
 focus_neighbor_bottom = NodePath("../../../../../RestartPanel/HBoxContainer/MainMenuBtn")
 theme_override_font_sizes/font_size = 50
@@ -348,7 +356,7 @@ offset_left = 934.0
 offset_top = -116.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_wgm17")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_tds82")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/MoneyPanel"]
 layout_mode = 1
@@ -371,7 +379,8 @@ theme_override_colors/font_color = Color(0.619608, 0, 0.443137, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/font_size = 45
+theme_override_fonts/font = ExtResource("8_ba4jg")
+theme_override_font_sizes/font_size = 40
 text = "Event: Nothing"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -388,6 +397,7 @@ theme_override_colors/font_color = Color(0.882353, 0.792157, 0, 1)
 theme_override_colors/font_shadow_color = Color(0.278431, 0.168627, 0, 1)
 theme_override_constants/shadow_offset_x = 5
 theme_override_constants/shadow_offset_y = 3
+theme_override_fonts/font = ExtResource("8_ba4jg")
 theme_override_font_sizes/font_size = 45
 text = "Cheese Coins: $000"
 
@@ -397,7 +407,7 @@ anchor_right = 1.0
 offset_left = 934.0
 offset_bottom = 209.0
 grow_horizontal = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_t6jdi")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_n6bii")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/RestartPanel"]
 layout_mode = 2
@@ -415,10 +425,12 @@ custom_minimum_size = Vector2(250, 150)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+tooltip_text = "Continue to level?"
 focus_neighbor_left = NodePath("../../../UpgradePanel/CenterContainer/Upgrades/BubbleUpgrade/BubbleBtn")
 focus_neighbor_top = NodePath("../../../UpgradePanel/CenterContainer/Upgrades/BoostUpgrade/BoostBtn")
 focus_neighbor_right = NodePath("../MainMenuBtn")
 focus_neighbor_bottom = NodePath("../../../UpgradePanel/CenterContainer/Upgrades/BubbleUpgrade/BubbleBtn")
+theme = ExtResource("9_jblt0")
 theme_override_font_sizes/font_size = 50
 text = "Play"
 
@@ -427,10 +439,12 @@ custom_minimum_size = Vector2(350, 150)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+tooltip_text = "Go back to main menu?"
 focus_neighbor_left = NodePath("../ContinueBtn")
 focus_neighbor_top = NodePath("../../../UpgradePanel/CenterContainer/Upgrades/BoostUpgrade/BoostBtn")
-focus_neighbor_right = NodePath("../../../UpgradePanel/CenterContainer/Upgrades/BoostUpgrade/BoostBtn")
-focus_neighbor_bottom = NodePath("../ContinueBtn")
+focus_neighbor_right = NodePath("../../../UpgradePanel/CenterContainer/Upgrades/BlasterUpgrade/BlasterBtn")
+focus_neighbor_bottom = NodePath("../../../UpgradePanel/CenterContainer/Upgrades/BlasterUpgrade/BlasterBtn")
+theme = ExtResource("9_jblt0")
 theme_override_font_sizes/font_size = 50
 text = "Main Menu"
 

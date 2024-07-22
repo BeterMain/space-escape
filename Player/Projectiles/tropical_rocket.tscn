@@ -9,6 +9,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r0o8b"]
 render_priority = 0
 shader = ExtResource("1_yg57f")
+shader_parameter/uv1_scale = Vector2(1, 1)
 shader_parameter/alpha = 1.0
 shader_parameter/rippliing = false
 shader_parameter/using_texture = false
@@ -86,6 +87,8 @@ shape = SubResource("BoxShape3D_hvsfk")
 [node name="HitBox" parent="." instance=ExtResource("2_ebcbt")]
 collision_layer = 2048
 collision_mask = 32784
+damage = 1e+07
+boss_damage = 0.025
 
 [node name="CollisionShape3D" parent="HitBox" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0264893, 0.00305176, -0.00354004)
@@ -94,6 +97,8 @@ shape = SubResource("BoxShape3D_1gxrx")
 [node name="HurtBox" parent="." instance=ExtResource("3_llb2e")]
 collision_layer = 4096
 collision_mask = 33
+damage = 1e+07
+boss_damage = 0.025
 
 [node name="CollisionShape3D" parent="HurtBox" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00180054, 0.017334, 0.00588989)

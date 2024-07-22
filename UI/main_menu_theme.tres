@@ -1,0 +1,27 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://den0jy5apluvv"]
+
+[ext_resource type="FontFile" uid="uid://dxg4nni4ox4b6" path="res://UI/Font/Jumpers-V44D6.otf" id="1_8g6kr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1yb5g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4swrm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_40wiy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o60sf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1swcl"]
+
+[resource]
+default_font = ExtResource("1_8g6kr")
+default_font_size = 50
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+Button/colors/font_focus_color = Color(0.756863, 0.756863, 0, 1)
+Button/colors/font_hover_color = Color(0.94902, 0.94902, 0, 1)
+Button/colors/font_pressed_color = Color(0, 0.364706, 0.364706, 1)
+Button/font_sizes/font_size = 16
+Button/styles/disabled = SubResource("StyleBoxEmpty_1yb5g")
+Button/styles/focus = SubResource("StyleBoxEmpty_4swrm")
+Button/styles/hover = SubResource("StyleBoxEmpty_40wiy")
+Button/styles/normal = SubResource("StyleBoxEmpty_o60sf")
+Button/styles/pressed = SubResource("StyleBoxEmpty_1swcl")

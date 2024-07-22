@@ -13,10 +13,12 @@ const SELECT = preload("res://Audio/SFXs/UI/buttonSelected.wav")
 @onready var clear_button = $ClearButton
 @onready var confirm_button = $ConfirmButton
 @onready var fps_checkbox = $CenterContainer/VBoxContainer/ScreenResolution/ResolutionOptions/FPSCheckbox
+@onready var full_screen_checkbox = $CenterContainer/VBoxContainer/ScreenResolution/ResolutionOptions/FullScreenCheckbox
 
 signal hiding
 
 @export var right_stick_speed = 2.0
+var can_clear_save = true
 
 func _ready():
 	master_volume.value = Supervisor.master_db
@@ -32,39 +34,13 @@ func _ready():
 	Supervisor.set_vl_db(voice_line_volume.value)
 	
 	resolutions.disabled = Supervisor.fullscreen_on
-
+	
 func _process(_delta):
 	if Input.is_action_just_pressed("pause"):
 		hide_self()
 	
-	# Right stick movement
-	'''
-	if is_controller_connected():
-		var right_stick_value = Vector2(
-				Input.get_joy_axis(0, JOY_AXIS_RIGHT_X),
-				Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y)
-			)
-		
-		# Apply right stick movement
-		if master_volume.has_focus():
-			master_volume.value += right_stick_value.x * right_stick_speed * delta
-			# Clamp the slider value to its min and max
-			master_volume.value = clamp(master_volume.value, master_volume.min_value, master_volume.max_value)
-		if bgm_volume.has_focus():
-			bgm_volume.value += right_stick_value.x * right_stick_speed * delta
-			# Clamp the slider value to its min and max
-			bgm_volume.value = clamp(bgm_volume.value, bgm_volume.min_value, bgm_volume.max_value)
-		if sfx_volume.has_focus():
-			sfx_volume.value += right_stick_value.x * right_stick_speed * delta
-			# Clamp the slider value to its min and max
-			sfx_volume.value = clamp(sfx_volume.value, sfx_volume.min_value, sfx_volume.max_value)
-		if voice_line_volume.has_focus():
-			voice_line_volume.value += right_stick_value.x * right_stick_speed * delta
-			# Clamp the slider value to its min and max
-			voice_line_volume.value = clamp(voice_line_volume.value, voice_line_volume.min_value, voice_line_volume.max_value)
-		
-	'''
-		
+	if not can_clear_save:
+		clear_button.visible = false
 
 	
 func center_window():
@@ -139,6 +115,11 @@ func _on_resolutions_item_selected(index):
 func _on_full_screen_checkbox_toggled(toggled_on):
 	play_sfx(SELECT)
 	
+	if toggled_on:
+		full_screen_checkbox.text = "On"
+	else:
+		full_screen_checkbox.text = "Off"
+	
 	resolutions.disabled = toggled_on
 	Supervisor.fullscreen_on = toggled_on
 	if toggled_on:
@@ -172,12 +153,13 @@ func _on_back_button_pressed():
 	play_sfx(PRESSED)
 
 func _on_clear_button_pressed():
-	clear_button.visible = false
-	clear_button.disabled = true
-	
-	confirm_button.visible = true
-	confirm_button.disabled = false
-	confirm_button.grab_focus()
+	if can_clear_save:
+		clear_button.visible = false
+		clear_button.disabled = true
+		
+		confirm_button.visible = true
+		confirm_button.disabled = false
+		confirm_button.grab_focus()
 
 func _on_confirm_button_pressed():
 	reset_buttons()

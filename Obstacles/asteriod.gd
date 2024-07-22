@@ -38,7 +38,7 @@ var SPEED = SPEED_MAX
 
 # Boss vars
 var trail_active = false
-var normal = false
+var normal = true
 var speed_increased = false
 
 var value = 100
@@ -81,7 +81,6 @@ func _physics_process(delta):
 	elif spin_y:
 		spin_pivot.rotate(Vector3(0.1, x_rotation, 0.1).normalized(), rotation_speed)
 	
-	
 	move_and_slide()
 
 # Misc funcs
@@ -89,9 +88,8 @@ func initialize(start_position, player_position, chase=false):
 	if chase:
 		# We position the mob by placing it at start_position
 		# and rotate it towards player_position, so it looks at the player.
-		look_at_from_position(start_position, player_position, Vector3.UP)
-		
-		rotate_y(randf_range(-PI / 4, PI / 4))
+		look_at_from_position(start_position, player_position + Vector3(randf_range(1, 2), 0, randf_range(1, 2)), Vector3.UP)
+	
 		normal = false
 	else:
 		# Go Down
@@ -105,7 +103,7 @@ func hit(area):
 			sfx.play()
 	
 	# Take damage
-	if area.collision_layer != 8:
+	if area.collision_layer != 8 :
 		if animation_player:
 			animation_player.play("flash")
 		stats.health -= area.damage

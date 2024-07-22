@@ -93,15 +93,16 @@ func _ready():
 	bubble_shield.visible = Supervisor.bubble_active
 	hurtbox_collision.disabled = false
 	
-	shoot_text.visible = Supervisor.blaster_unlocked
+	shoot_text.visible = Supervisor.blaster_unlocked and not TutorialManager.rainbow_tutorial_complete
 
 func _physics_process(delta):
 	# Show if speed is lowered
 	$SpeedParticles.emitting = speed_lowered
 	
-	if shoot_text.visible:
+	if shoot_text.visible and not TutorialManager.rainbow_tutorial_complete:
 		tutorial_animation_player.play("show_shoot_control")
 		if Input.is_action_just_pressed("shoot"):
+			TutorialManager.rainbow_tutorial_complete = true
 			tutorial_animation_player.stop()
 			shoot_text.visible = false
 	
@@ -200,7 +201,7 @@ func move_state(delta):
 	# Subtract beam repel to make player go backwards
 	velocity.z -= beam_repel * Vector3.FORWARD.z * delta
 	
-	# Check for boost
+	# Check for boost input or check for direction in controller stick for boost 
 	if Input.is_action_just_pressed("boost") and boost_active and Supervisor.boosts_left > 0:
 		Supervisor.boosts_left -= 1
 		
@@ -216,7 +217,8 @@ func move_state(delta):
 		sfx.play()
 		
 		if boost_invincible:
-			bubble_health += 1
+			if bubble_health < 3:
+				bubble_health += 1
 			bubble_shield.visible = true
 		
 		state = boost
@@ -266,6 +268,7 @@ func set_thruster_strength(value):
 
 func dodge_animation_finished():
 	state = move
+	
 
 # Powerup funcs
 func activate_apple():

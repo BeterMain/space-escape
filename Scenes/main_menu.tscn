@@ -1,17 +1,24 @@
-[gd_scene load_steps=15 format=3 uid="uid://huaeiq7sqrf"]
+[gd_scene load_steps=21 format=3 uid="uid://huaeiq7sqrf"]
 
 [ext_resource type="Script" path="res://Scenes/main_menu.gd" id="1_xx8ae"]
 [ext_resource type="PackedScene" uid="uid://dkh6kcnqlesuq" path="res://Imports/Ship/player_ship.gltf" id="2_idqgm"]
 [ext_resource type="PackedScene" uid="uid://bpe5luvm6v45x" path="res://UI/debug_ui.tscn" id="3_d6pul"]
 [ext_resource type="AudioStream" uid="uid://b7ao1nepmprm6" path="res://Audio/BGM/Space_Escape.wav" id="3_fpm8m"]
 [ext_resource type="PackedScene" uid="uid://bihym4ymtm4m5" path="res://UI/settings_menu.tscn" id="4_rgd3n"]
+[ext_resource type="FontFile" uid="uid://dc37pd247h0sh" path="res://UI/Font/Jumpers3DItalic-G33nm.otf" id="5_5rkr1"]
+[ext_resource type="Theme" uid="uid://den0jy5apluvv" path="res://UI/main_menu_theme.tres" id="6_3e2u1"]
 [ext_resource type="Texture2D" uid="uid://shwsuyf6hb1t" path="res://UI/GoldenPizza.png" id="6_whp0x"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mi82q"]
-albedo_color = Color(0, 0, 0.192157, 1)
+albedo_color = Color(0, 0, 0, 1)
+metallic = 1.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_5jify"]
 material = SubResource("StandardMaterial3D_mi82q")
+
+[sub_resource type="SphereMesh" id="SphereMesh_nnrao"]
+radius = 0.063
+height = 0.125
 
 [sub_resource type="Animation" id="Animation_vjaur"]
 length = 0.001
@@ -49,6 +56,44 @@ tracks/0/keys = {
 _data = {
 "RESET": SubResource("Animation_vjaur"),
 "spin_win": SubResource("Animation_l0ws5")
+}
+
+[sub_resource type="Animation" id="Animation_1rvfk"]
+resource_name = "glow"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DebugUI/UI/CenterContainer/VBoxContainer/MenuTXT:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 3, 5, 6, 8, 10),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 0, 1), Color(0.133333, 0.34902, 0.184314, 1), Color(0.65098, 0.0156863, 0.54902, 1), Color(1, 1, 1, 1), Color(0.576471, 0.0235294, 0.596078, 1), Color(0.133333, 0.34902, 0.184314, 1), Color(1, 1, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_o4783"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DebugUI/UI/CenterContainer/VBoxContainer/MenuTXT:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.152941, 0.701961, 0.286275, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ukotn"]
+_data = {
+"RESET": SubResource("Animation_o4783"),
+"glow": SubResource("Animation_1rvfk")
 }
 
 [sub_resource type="AudioStreamWAV" id="AudioStreamWAV_oybpi"]
@@ -97,6 +142,28 @@ skeleton = NodePath("../../..")
 [node name="blockbench_export2" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_idqgm")]
 transform = Transform3D(-0.419869, 0.104064, -0.901599, -0.315478, 0.914724, 0.252495, 0.85099, 0.390449, -0.351234, -0.639461, 1.02942, -0.581721)
 
+[node name="Particles" type="CPUParticles3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.47482, 0.475394, -1.8933)
+amount = 60
+lifetime = 6.6
+preprocess = 8.77
+speed_scale = 0.5
+local_coords = true
+mesh = SubResource("SphereMesh_nnrao")
+emission_shape = 3
+emission_box_extents = Vector3(1, 2, 2)
+particle_flag_disable_z = true
+direction = Vector3(-1, 0, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 4.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+orbit_velocity_curve = null
+scale_amount_min = 0.5
+scale_amount_max = 0.75
+
 [node name="DebugUI" parent="." instance=ExtResource("3_d6pul")]
 
 [node name="SettingsMenu" parent="DebugUI" instance=ExtResource("4_rgd3n")]
@@ -117,7 +184,12 @@ theme_override_constants/separation = 500
 
 [node name="MenuTXT" type="Label" parent="DebugUI/UI/CenterContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 100
+theme_override_colors/font_color = Color(0.152941, 0.701961, 0.286275, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 6
+theme_override_fonts/font = ExtResource("5_5rkr1")
+theme_override_font_sizes/font_size = 150
 text = "Space Escape"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -130,19 +202,22 @@ theme_override_constants/separation = 350
 [node name="StartBtn" type="Button" parent="DebugUI/UI/CenterContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
+theme = ExtResource("6_3e2u1")
+theme_override_font_sizes/font_size = 100
 text = "Start"
 
 [node name="SettingsBtn" type="Button" parent="DebugUI/UI/CenterContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
+theme = ExtResource("6_3e2u1")
+theme_override_font_sizes/font_size = 100
 text = "Settings"
 
 [node name="QuitBtn" type="Button" parent="DebugUI/UI/CenterContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
+theme = ExtResource("6_3e2u1")
+theme_override_font_sizes/font_size = 100
 text = "Quit"
 
 [node name="VersionTxt" type="Label" parent="DebugUI/UI"]
@@ -175,21 +250,30 @@ libraries = {
 "": SubResource("AnimationLibrary_8og2w")
 }
 
+[node name="UIAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ukotn")
+}
+autoplay = "glow"
+
+[node name="CutsceneAnimationPlayer" type="AnimationPlayer" parent="."]
+
 [node name="MainMenuBGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_fpm8m")
-volume_db = -10.0
+volume_db = -15.0
 autoplay = true
 bus = &"BGMs"
 
 [node name="SFX" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamWAV_oybpi")
+volume_db = 5.0
 bus = &"Sound Effects"
 
 [node name="Pivot" type="Marker2D" parent="."]
+visible = false
 position = Vector2(1809, 130)
 
 [node name="WinnerSprite" type="TextureRect" parent="Pivot"]
-visible = false
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -202,7 +286,6 @@ rotation = 6.28319
 texture = ExtResource("6_whp0x")
 
 [node name="WinnerParticles" type="CPUParticles2D" parent="Pivot/WinnerSprite"]
-visible = false
 z_index = -1
 position = Vector2(64, 63)
 amount = 50

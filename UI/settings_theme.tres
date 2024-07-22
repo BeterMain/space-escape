@@ -1,6 +1,73 @@
-[gd_resource type="Theme" format=3 uid="uid://bq64b06ak21t4"]
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://bq64b06ak21t4"]
+
+[ext_resource type="FontFile" uid="uid://dxg4nni4ox4b6" path="res://UI/Font/Jumpers-V44D6.otf" id="1_jxr51"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e55hl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_plhku"]
+bg_color = Color(1, 1, 1, 1)
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 0.764706)
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+corner_detail = 3
+shadow_size = 2
+shadow_offset = Vector2(0, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8wb73"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_535ox"]
+bg_color = Color(0.266667, 0.282353, 0.309804, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 0.764706)
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+corner_detail = 20
+shadow_size = 2
+shadow_offset = Vector2(0, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dnulf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v54nx"]
+bg_color = Color(0.968627, 0.74902, 0, 1)
+corner_radius_top_left = 1024
+corner_radius_bottom_left = 1024
 
 [resource]
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+Button/colors/font_focus_color = Color(0.529412, 0.529412, 0, 1)
+Button/colors/font_hover_color = Color(1, 1, 0, 1)
+Button/font_sizes/font_size = 50
+Button/fonts/font = ExtResource("1_jxr51")
+Button/styles/disabled = SubResource("StyleBoxEmpty_e55hl")
+Button/styles/focus = SubResource("StyleBoxFlat_plhku")
+Button/styles/hover = SubResource("StyleBoxEmpty_8wb73")
+Button/styles/normal = SubResource("StyleBoxFlat_535ox")
+Button/styles/pressed = SubResource("StyleBoxEmpty_dnulf")
+CheckBox/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+CheckBox/colors/font_focus_color = Color(0.698039, 0.737255, 0, 1)
+CheckBox/colors/font_hover_color = Color(0.945098, 1, 0, 1)
+CheckBox/colors/font_hover_pressed_color = Color(0.74902, 0.74902, 0, 1)
+CheckBox/colors/font_pressed_color = Color(0, 0.686275, 0.870588, 1)
 CheckBox/font_sizes/font_size = 16
-Label/font_sizes/font_size = 50
-OptionButton/font_sizes/font_size = 28
+CheckBox/fonts/font = ExtResource("1_jxr51")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_v54nx")
+Label/font_sizes/font_size = 75
+Label/fonts/font = ExtResource("1_jxr51")
+OptionButton/font_sizes/font_size = 50
+OptionButton/fonts/font = ExtResource("1_jxr51")
