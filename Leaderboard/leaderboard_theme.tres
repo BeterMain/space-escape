@@ -1,0 +1,8 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://ckunpus3gip5s"]
+
+[ext_resource type="FontFile" uid="uid://dxg4nni4ox4b6" path="res://UI/Font/Jumpers-V44D6.otf" id="1_ajnjj"]
+
+[resource]
+Button/fonts/font = ExtResource("1_ajnjj")
+Label/fonts/font = ExtResource("1_ajnjj")
+TextEdit/fonts/font = ExtResource("1_ajnjj")

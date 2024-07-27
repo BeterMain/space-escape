@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d050sol4scqn7"
-path="res://.godot/imported/space_background_coffee_2.png-96b887c836b8707fe4af4716bf9c269b.ctex"
+uid="uid://byx7cm6jwl86p"
+path="res://.godot/imported/Icon_64x64.png-d8f600c6b7537ec381ca641dfbdba4cc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Levels/space_background_coffee_2.png"
-dest_files=["res://.godot/imported/space_background_coffee_2.png-96b887c836b8707fe4af4716bf9c269b.ctex"]
+source_file="res://Source/Icon_64x64.png"
+dest_files=["res://.godot/imported/Icon_64x64.png-d8f600c6b7537ec381ca641dfbdba4cc.ctex"]
 
 [params]
 

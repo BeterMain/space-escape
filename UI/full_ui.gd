@@ -13,8 +13,7 @@ const HEALTH_UI = preload("res://UI/health_ui.png")
 @onready var continue_btn = $Control/ContinuePrompt/PromptBG/Elements/Buttons/ContinueBtn
 @onready var continue_prompt = $Control/ContinuePrompt
 @onready var sfx = $Control/ContinuePrompt/SFX
-@onready var panel_txt = $Control/ContinuePrompt/PromptBG/Elements/Events/VBoxContainer/PanelTxt
-@onready var event_texture = $Control/ContinuePrompt/PromptBG/Elements/Events/VBoxContainer/EventTexture
+@onready var panel_txt = $Control/ContinuePrompt/PromptBG/Elements/Events/CenterContainer/VBoxContainer/PanelTxt
 @onready var death_prompt = $Control/DeathPrompt
 @onready var death_back_btn = $Control/DeathPrompt/PromptBG/Elements/BackBtn
 @onready var stats_txt = $Control/DeathPrompt/PromptBG/Elements/PanelContainer/StatsTxt
@@ -22,6 +21,7 @@ const HEALTH_UI = preload("res://UI/health_ui.png")
 @onready var player_health = $Control/PlayerHealth
 @onready var animation_player = $AnimationPlayer
 @onready var player_healthbar = $Control/PlayerHealthbar
+@onready var leaderboard_functions = $LeaderboardFunctions
 
 # Boss Vars
 var boss_active = false
@@ -70,6 +70,7 @@ func display_continue_prompt(upcoming_event):
 	continue_prompt.visible = true
 	panel_txt.text = upcoming_event
 	continue_btn.grab_focus()
+	leaderboard_functions._upload_score(Supervisor.highscore_distance)
 	
 	var position = len(Supervisor.code_collected)
 	# Check if can add code key to collection
@@ -82,6 +83,7 @@ func display_death_prompt(distance):
 	distance_txt.visible = false
 	boss_active = false
 	stats_txt.text = "Distance: " + str(int(distance)) + "m\nHighscore: " + str(int(Supervisor.highscore_distance)) + "m"
+	leaderboard_functions._upload_score(Supervisor.highscore_distance)
 	death_back_btn.grab_focus()
 
 func _on_back_btn_pressed():

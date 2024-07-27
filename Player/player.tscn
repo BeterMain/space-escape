@@ -14,14 +14,14 @@
 [sub_resource type="Gradient" id="Gradient_qy7ni"]
 colors = PackedColorArray(0, 0, 0, 1, 0.923848, 0.401851, 5.77569e-07, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_llp51"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_p55ap"]
 gradient = SubResource("Gradient_qy7ni")
 
 [sub_resource type="Curve" id="Curve_26r8p"]
 _data = [Vector2(0.0434783, 0.395604), 0.0, -0.929458, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_wyfhp"]
+[sub_resource type="CurveTexture" id="CurveTexture_yeaaq"]
 curve = SubResource("Curve_26r8p")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i3yy7"]
@@ -35,10 +35,10 @@ gravity = Vector3(0, 0, 0)
 linear_accel_min = 1.0
 linear_accel_max = 5.0
 scale_min = 0.1
-scale_curve = SubResource("CurveTexture_wyfhp")
-color_initial_ramp = SubResource("GradientTexture1D_llp51")
+scale_curve = SubResource("CurveTexture_yeaaq")
+color_initial_ramp = SubResource("GradientTexture1D_p55ap")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dx06q"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m80yb"]
 transparency = 1
 blend_mode = 1
 shading_mode = 0
@@ -51,7 +51,7 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="QuadMesh" id="QuadMesh_ga5h3"]
-material = SubResource("StandardMaterial3D_dx06q")
+material = SubResource("StandardMaterial3D_m80yb")
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_w5pmk"]
 _surfaces = [{

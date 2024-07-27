@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://db438yjhqjuwr"]
+
+[ext_resource type="Script" path="res://Levels/tutorial_message.gd" id="1_tx5dk"]
+[ext_resource type="PackedScene" uid="uid://cs4pdnl4db0o1" path="res://Colliders/hurt_box.tscn" id="2_ogse8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w8peq"]
+billboard_mode = 1
+
+[sub_resource type="TextMesh" id="TextMesh_o3it6"]
+material = SubResource("StandardMaterial3D_w8peq")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_a62ad"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_e028i"]
+radius = 0.7
+
+[node name="TutorialMessage" type="CharacterBody3D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_tx5dk")
+
+[node name="Message" type="MeshInstance3D" parent="."]
+mesh = SubResource("TextMesh_o3it6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_a62ad")
+
+[node name="HurtBox" parent="." instance=ExtResource("2_ogse8")]
+collision_layer = 16
+collision_mask = 32
+
+[node name="CollisionShape3D" parent="HurtBox" index="0"]
+shape = SubResource("SphereShape3D_e028i")
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+
+[editable path="HurtBox"]

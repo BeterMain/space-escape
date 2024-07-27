@@ -16,12 +16,16 @@ func load_data():
 		clear_save()
 	else:
 		var file = FileAccess.open(SAVEFILE, FileAccess.READ)
+		
 		game_data = file.get_var()
 		first_load = file.get_var()
+		
 		if game_data["version"] != Supervisor.version:
 			clear_save()
 		else:
 			data_loaded.emit()
+	
+		file.close()
 
 func clear_save():  
 	Supervisor.generate_new_code()
@@ -61,6 +65,7 @@ func clear_save():
 
 func save_data():
 	var file = FileAccess.open(SAVEFILE, FileAccess.WRITE)
+	
 	file.store_var(game_data)
 	file.store_var(first_load)
 	file.close()

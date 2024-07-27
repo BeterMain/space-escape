@@ -34,6 +34,7 @@ func _ready():
 	Supervisor.set_vl_db(voice_line_volume.value)
 	
 	resolutions.disabled = Supervisor.fullscreen_on
+	full_screen_checkbox.button_pressed = Supervisor.fullscreen_on
 	
 func _process(_delta):
 	if Input.is_action_just_pressed("pause"):
@@ -47,10 +48,6 @@ func center_window():
 	var center_screen = DisplayServer.screen_get_position() + DisplayServer.screen_get_size()/2
 	var window_size = get_window().get_size_with_decorations()
 	get_window().set_position(center_screen - window_size/2)
-
-func is_controller_connected() -> bool:
-	var device_count = Input.get_connected_joypads().size()
-	return device_count > 0
 
 func show_self():
 	visible = true

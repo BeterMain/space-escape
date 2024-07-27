@@ -11,13 +11,13 @@ config_version=5
 [application]
 
 config/name="Space Escape"
-config/version="0.5"
+config/version="0.9"
 run/main_scene="res://Scenes/main.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 run/max_fps=120
 boot_splash/show_image=false
 config/icon="res://Source/v0.2_Icon.png"
-config/windows_native_icon="res://Source/v0.2.ico"
+config/windows_native_icon="res://Source/icon.ico"
 
 [autoload]
 

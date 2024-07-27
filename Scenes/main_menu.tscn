@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://huaeiq7sqrf"]
+[gd_scene load_steps=42 format=3 uid="uid://huaeiq7sqrf"]
 
 [ext_resource type="Script" path="res://Scenes/main_menu.gd" id="1_xx8ae"]
 [ext_resource type="PackedScene" uid="uid://dkh6kcnqlesuq" path="res://Imports/Ship/player_ship.gltf" id="2_idqgm"]
@@ -6,8 +6,10 @@
 [ext_resource type="AudioStream" uid="uid://b7ao1nepmprm6" path="res://Audio/BGM/Space_Escape.wav" id="3_fpm8m"]
 [ext_resource type="PackedScene" uid="uid://bihym4ymtm4m5" path="res://UI/settings_menu.tscn" id="4_rgd3n"]
 [ext_resource type="FontFile" uid="uid://dc37pd247h0sh" path="res://UI/Font/Jumpers3DItalic-G33nm.otf" id="5_5rkr1"]
+[ext_resource type="PackedScene" uid="uid://csvn4kc7vmyvl" path="res://Leaderboard/leaderboard.tscn" id="5_l6t5s"]
 [ext_resource type="Theme" uid="uid://den0jy5apluvv" path="res://UI/main_menu_theme.tres" id="6_3e2u1"]
 [ext_resource type="Texture2D" uid="uid://shwsuyf6hb1t" path="res://UI/GoldenPizza.png" id="6_whp0x"]
+[ext_resource type="FontFile" uid="uid://dxg4nni4ox4b6" path="res://UI/Font/Jumpers-V44D6.otf" id="7_caeqh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mi82q"]
 albedo_color = Color(0, 0, 0, 1)
@@ -16,9 +18,302 @@ metallic = 1.0
 [sub_resource type="PlaneMesh" id="PlaneMesh_5jify"]
 material = SubResource("StandardMaterial3D_mi82q")
 
-[sub_resource type="SphereMesh" id="SphereMesh_nnrao"]
+[sub_resource type="Gradient" id="Gradient_n3553"]
+colors = PackedColorArray(0, 0, 0, 1, 0.923848, 0.401851, 5.77569e-07, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_llp51"]
+gradient = SubResource("Gradient_n3553")
+
+[sub_resource type="Curve" id="Curve_lbr4w"]
+_data = [Vector2(0.0434783, 0.395604), 0.0, -0.929458, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wyfhp"]
+curve = SubResource("Curve_lbr4w")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_550wt"]
+angle_max = 360.0
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_min = 1.0
+initial_velocity_max = 30.0
+angular_velocity_max = 40.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = 1.0
+linear_accel_max = 5.0
+scale_min = 0.1
+scale_curve = SubResource("CurveTexture_wyfhp")
+color_initial_ramp = SubResource("GradientTexture1D_llp51")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dx06q"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.396078, 0.113725, 0, 1)
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_6aely"]
+material = SubResource("StandardMaterial3D_dx06q")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yssxc"]
+lifetime_randomness = 0.42
+emission_shape = 3
+emission_box_extents = Vector3(2, 3, 1)
+direction = Vector3(-1, 0, 0)
+spread = 0.0
+initial_velocity_min = 1.0
+initial_velocity_max = 4.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.25
+scale_max = 0.5
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.69
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p1y4a"]
+albedo_color = Color(1, 0.396078, 0.247059, 1)
+distance_fade_mode = 1
+distance_fade_min_distance = 7.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_yhiah"]
+material = SubResource("StandardMaterial3D_p1y4a")
 radius = 0.063
 height = 0.125
+
+[sub_resource type="LabelSettings" id="LabelSettings_6pvls"]
+font = ExtResource("7_caeqh")
+font_size = 120
+
+[sub_resource type="LabelSettings" id="LabelSettings_biv0r"]
+font_size = 20
+
+[sub_resource type="Animation" id="Animation_c083h"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CenterContainer/Label:label_settings:font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CenterContainer/Label:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["made by justin toliver"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../CenterContainer:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../VersionTxt:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../MadeByTxt:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../Flash:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../..:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_l266a"]
+resource_name = "intro"
+length = 11.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CenterContainer/Label:label_settings:font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3, 5, 6, 7.5, 10, 11),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CenterContainer/Label:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": ["made by justin toliver", "Created for GDC Game Jam"]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../../..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 11),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"start_scene_music"
+}, {
+"args": [],
+"method": &"start_cutscene"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 11),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../CenterContainer:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../VersionTxt:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../MadeByTxt:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../Flash:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../..:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o03ju"]
+_data = {
+"RESET": SubResource("Animation_c083h"),
+"intro": SubResource("Animation_l266a")
+}
 
 [sub_resource type="Animation" id="Animation_vjaur"]
 length = 0.001
@@ -58,6 +353,21 @@ _data = {
 "spin_win": SubResource("Animation_l0ws5")
 }
 
+[sub_resource type="Animation" id="Animation_o4783"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DebugUI/UI/CenterContainer/VBoxContainer/MenuTXT:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.152941, 0.701961, 0.286275, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_1rvfk"]
 resource_name = "glow"
 length = 10.0
@@ -75,25 +385,249 @@ tracks/0/keys = {
 "values": [Color(1, 1, 0, 1), Color(0.133333, 0.34902, 0.184314, 1), Color(0.65098, 0.0156863, 0.54902, 1), Color(1, 1, 1, 1), Color(0.576471, 0.0235294, 0.596078, 1), Color(0.133333, 0.34902, 0.184314, 1), Color(1, 1, 0, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_o4783"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ukotn"]
+_data = {
+"RESET": SubResource("Animation_o4783"),
+"glow": SubResource("Animation_1rvfk")
+}
+
+[sub_resource type="Animation" id="Animation_i485c"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("DebugUI/UI/CenterContainer/VBoxContainer/MenuTXT:theme_override_colors/font_color")
+tracks/0/path = NodePath("SubViewportContainer/SubViewport/blockbench_export2:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0.152941, 0.701961, 0.286275, 1)]
+"values": [Vector3(-1.07062, 1.02942, -0.581721)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewportContainer/SubViewport/blockbench_export2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.255258, -1.94228, -0.332114)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DebugUI/UI/Flash:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DebugUI/UI/Flash:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("DebugUI/UI/CenterContainer:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("DebugUI/UI/VersionTxt:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("DebugUI/UI/MadeByTxt:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("DebugUI:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ukotn"]
+[sub_resource type="Animation" id="Animation_joovj"]
+resource_name = "float"
+length = 5.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewportContainer/SubViewport/blockbench_export2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-1.07062, 1.02942, -0.581721), Vector3(0.0258456, 1.02942, -0.838323)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewportContainer/SubViewport/blockbench_export2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.255258, -1.94228, -0.332114), Vector3(-0.190515, -2.13876, 0.119886)]
+}
+
+[sub_resource type="Animation" id="Animation_jq1oh"]
+resource_name = "fly_in"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewportContainer/SubViewport/blockbench_export2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-3.11959, 1.02942, -4.52631), Vector3(-1.07062, 1.02942, -0.581721)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewportContainer/SubViewport/blockbench_export2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.164004, 2.88586, 0.364133), Vector3(-0.255258, -1.94228, -0.332114)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DebugUI/UI/Flash:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DebugUI/UI/Flash:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1, 1.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("DebugUI/UI/CenterContainer:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("DebugUI/UI/VersionTxt:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("DebugUI/UI/MadeByTxt:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("DebugUI:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_7b3dt"]
+resource_name = "fly_out"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f7wxe"]
 _data = {
-"RESET": SubResource("Animation_o4783"),
-"glow": SubResource("Animation_1rvfk")
+"RESET": SubResource("Animation_i485c"),
+"float": SubResource("Animation_joovj"),
+"fly_in": SubResource("Animation_jq1oh"),
+"fly_out": SubResource("Animation_7b3dt")
 }
 
 [sub_resource type="AudioStreamWAV" id="AudioStreamWAV_oybpi"]
@@ -140,33 +674,70 @@ mesh = SubResource("PlaneMesh_5jify")
 skeleton = NodePath("../../..")
 
 [node name="blockbench_export2" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_idqgm")]
-transform = Transform3D(-0.419869, 0.104064, -0.901599, -0.315478, 0.914724, 0.252495, 0.85099, 0.390449, -0.351234, -0.639461, 1.02942, -0.581721)
+transform = Transform3D(-0.419871, 0.104063, -0.901598, -0.315478, 0.914724, 0.252495, 0.850989, 0.39045, -0.351236, -1.07062, 1.02942, -0.581721)
 
-[node name="Particles" type="CPUParticles3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.47482, 0.475394, -1.8933)
-amount = 60
+[node name="ThrusterParticles" type="Node3D" parent="SubViewportContainer/SubViewport/blockbench_export2"]
+
+[node name="ThrusterParticles" type="GPUParticles3D" parent="SubViewportContainer/SubViewport/blockbench_export2/ThrusterParticles"]
+transform = Transform3D(0.333333, 0, 0, 0, -1.45705e-08, -0.333333, 0, 0.333333, -1.45705e-08, -0.121994, 0.117074, 0.302073)
+amount = 500
+lifetime = 0.06
+randomness = 1.0
+fixed_fps = 60
+local_coords = true
+draw_order = 3
+process_material = SubResource("ParticleProcessMaterial_550wt")
+draw_pass_1 = SubResource("QuadMesh_6aely")
+
+[node name="ThrusterParticles2" type="GPUParticles3D" parent="SubViewportContainer/SubViewport/blockbench_export2/ThrusterParticles"]
+transform = Transform3D(0.333333, 0, 0, 0, -1.45705e-08, -0.333333, 0, 0.333333, -1.45705e-08, 0.124164, 0.117074, 0.302073)
+amount = 500
+lifetime = 0.06
+randomness = 1.0
+fixed_fps = 60
+local_coords = true
+draw_order = 3
+process_material = SubResource("ParticleProcessMaterial_550wt")
+draw_pass_1 = SubResource("QuadMesh_6aely")
+
+[node name="ThrusterParticles3" type="GPUParticles3D" parent="SubViewportContainer/SubViewport/blockbench_export2/ThrusterParticles"]
+transform = Transform3D(0.333333, 0, 0, 0, -1.45705e-08, -0.333333, 0, 0.333333, -1.45705e-08, 0.124164, -0.128409, 0.302073)
+amount = 500
+lifetime = 0.06
+randomness = 1.0
+fixed_fps = 60
+local_coords = true
+draw_order = 3
+process_material = SubResource("ParticleProcessMaterial_550wt")
+draw_pass_1 = SubResource("QuadMesh_6aely")
+
+[node name="ThrusterParticles4" type="GPUParticles3D" parent="SubViewportContainer/SubViewport/blockbench_export2/ThrusterParticles"]
+transform = Transform3D(0.333333, 0, 0, 0, -1.45705e-08, -0.333333, 0, 0.333333, -1.45705e-08, -0.129112, -0.128409, 0.302073)
+amount = 500
+lifetime = 0.06
+randomness = 1.0
+fixed_fps = 60
+local_coords = true
+draw_order = 3
+process_material = SubResource("ParticleProcessMaterial_550wt")
+draw_pass_1 = SubResource("QuadMesh_6aely")
+
+[node name="Particles" type="GPUParticles3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.47482, 0.475394, -0.988121)
+amount = 150
 lifetime = 6.6
-preprocess = 8.77
+preprocess = 13.69
 speed_scale = 0.5
 local_coords = true
-mesh = SubResource("SphereMesh_nnrao")
-emission_shape = 3
-emission_box_extents = Vector3(1, 2, 2)
-particle_flag_disable_z = true
-direction = Vector3(-1, 0, 0)
-spread = 0.0
-gravity = Vector3(0, 0, 0)
-initial_velocity_min = 1.0
-initial_velocity_max = 4.0
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
-orbit_velocity_curve = null
-scale_amount_min = 0.5
-scale_amount_max = 0.75
+process_material = SubResource("ParticleProcessMaterial_yssxc")
+draw_pass_1 = SubResource("SphereMesh_yhiah")
 
 [node name="DebugUI" parent="." instance=ExtResource("3_d6pul")]
 
 [node name="SettingsMenu" parent="DebugUI" instance=ExtResource("4_rgd3n")]
+visible = false
+
+[node name="Leaderboard" parent="DebugUI" instance=ExtResource("5_l6t5s")]
 visible = false
 
 [node name="UI" type="CanvasLayer" parent="DebugUI"]
@@ -180,7 +751,7 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DebugUI/UI/CenterContainer"]
 layout_mode = 2
-theme_override_constants/separation = 500
+theme_override_constants/separation = 10
 
 [node name="MenuTXT" type="Label" parent="DebugUI/UI/CenterContainer/VBoxContainer"]
 layout_mode = 2
@@ -194,31 +765,63 @@ text = "Space Escape"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="DebugUI/UI/CenterContainer/VBoxContainer"]
+[node name="Control" type="Control" parent="DebugUI/UI/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(50, 450)
+layout_mode = 2
+
+[node name="Start&Quit" type="HBoxContainer" parent="DebugUI/UI/CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(200, 175)
 layout_mode = 2
-theme_override_constants/separation = 350
+theme_override_constants/separation = 900
 
-[node name="StartBtn" type="Button" parent="DebugUI/UI/CenterContainer/VBoxContainer/HBoxContainer"]
+[node name="StartBtn" type="Button" parent="DebugUI/UI/CenterContainer/VBoxContainer/Start&Quit"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath("../QuitBtn")
+focus_neighbor_top = NodePath("../../Settings&Leaderboard/SettingsBtn")
+focus_neighbor_right = NodePath("../QuitBtn")
+focus_neighbor_bottom = NodePath("../../Settings&Leaderboard/SettingsBtn")
 theme = ExtResource("6_3e2u1")
 theme_override_font_sizes/font_size = 100
 text = "Start"
 
-[node name="SettingsBtn" type="Button" parent="DebugUI/UI/CenterContainer/VBoxContainer/HBoxContainer"]
+[node name="QuitBtn" type="Button" parent="DebugUI/UI/CenterContainer/VBoxContainer/Start&Quit"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath("../StartBtn")
+focus_neighbor_top = NodePath("../../Settings&Leaderboard/Leaderboard")
+focus_neighbor_right = NodePath("../StartBtn")
+focus_neighbor_bottom = NodePath("../../Settings&Leaderboard/Leaderboard")
+theme = ExtResource("6_3e2u1")
+theme_override_font_sizes/font_size = 100
+text = "Quit"
+
+[node name="Settings&Leaderboard" type="HBoxContainer" parent="DebugUI/UI/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 175)
+layout_mode = 2
+theme_override_constants/separation = 250
+
+[node name="SettingsBtn" type="Button" parent="DebugUI/UI/CenterContainer/VBoxContainer/Settings&Leaderboard"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath("../Leaderboard")
+focus_neighbor_top = NodePath("../../Start&Quit/StartBtn")
+focus_neighbor_right = NodePath("../Leaderboard")
+focus_neighbor_bottom = NodePath("../../Start&Quit/StartBtn")
 theme = ExtResource("6_3e2u1")
 theme_override_font_sizes/font_size = 100
 text = "Settings"
 
-[node name="QuitBtn" type="Button" parent="DebugUI/UI/CenterContainer/VBoxContainer/HBoxContainer"]
+[node name="Leaderboard" type="Button" parent="DebugUI/UI/CenterContainer/VBoxContainer/Settings&Leaderboard"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
+focus_neighbor_left = NodePath("../SettingsBtn")
+focus_neighbor_top = NodePath("../../Start&Quit/QuitBtn")
+focus_neighbor_right = NodePath("../SettingsBtn")
+focus_neighbor_bottom = NodePath("../../Start&Quit/QuitBtn")
 theme = ExtResource("6_3e2u1")
 theme_override_font_sizes/font_size = 100
-text = "Quit"
+text = "Leaderboard"
 
 [node name="VersionTxt" type="Label" parent="DebugUI/UI"]
 anchors_preset = 3
@@ -227,7 +830,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -89.0
-offset_top = -28.0
+offset_top = -35.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 25
@@ -245,6 +848,64 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 30
 text = "Made by Justin Toliver"
 
+[node name="Flash" type="ColorRect" parent="DebugUI/UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Opening" type="Control" parent="DebugUI/UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="ColorRect" parent="DebugUI/UI/Opening"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="DebugUI/UI/Opening"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="DebugUI/UI/Opening/CenterContainer"]
+layout_mode = 2
+text = "made by justin toliver"
+label_settings = SubResource("LabelSettings_6pvls")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SkipTxt" type="Label" parent="DebugUI/UI/Opening"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -28.0
+offset_right = 448.0
+grow_vertical = 0
+text = "Press E/Sony Cross/ Xbox A/Nintendo B to skip"
+label_settings = SubResource("LabelSettings_biv0r")
+
+[node name="OpeningAnimationPlayer" type="AnimationPlayer" parent="DebugUI/UI/Opening"]
+libraries = {
+"": SubResource("AnimationLibrary_o03ju")
+}
+autoplay = "intro"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_8og2w")
@@ -257,11 +918,13 @@ libraries = {
 autoplay = "glow"
 
 [node name="CutsceneAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_f7wxe")
+}
 
 [node name="MainMenuBGM" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_fpm8m")
-volume_db = -15.0
-autoplay = true
+volume_db = -20.0
 bus = &"BGMs"
 
 [node name="SFX" type="AudioStreamPlayer" parent="."]
@@ -304,7 +967,10 @@ linear_accel_max = 31.23
 color = Color(0.537255, 0.537255, 0, 1)
 
 [connection signal="hiding" from="DebugUI/SettingsMenu" to="." method="_on_settings_menu_hiding"]
-[connection signal="pressed" from="DebugUI/UI/CenterContainer/VBoxContainer/HBoxContainer/StartBtn" to="." method="_on_start_btn_pressed"]
-[connection signal="pressed" from="DebugUI/UI/CenterContainer/VBoxContainer/HBoxContainer/SettingsBtn" to="." method="_on_settings_btn_pressed"]
-[connection signal="pressed" from="DebugUI/UI/CenterContainer/VBoxContainer/HBoxContainer/QuitBtn" to="." method="_on_quit_btn_pressed"]
+[connection signal="hiding" from="DebugUI/Leaderboard" to="." method="_on_leaderboard_hiding"]
+[connection signal="pressed" from="DebugUI/UI/CenterContainer/VBoxContainer/Start&Quit/StartBtn" to="." method="_on_start_btn_pressed"]
+[connection signal="pressed" from="DebugUI/UI/CenterContainer/VBoxContainer/Start&Quit/QuitBtn" to="." method="_on_quit_btn_pressed"]
+[connection signal="pressed" from="DebugUI/UI/CenterContainer/VBoxContainer/Settings&Leaderboard/SettingsBtn" to="." method="_on_settings_btn_pressed"]
+[connection signal="pressed" from="DebugUI/UI/CenterContainer/VBoxContainer/Settings&Leaderboard/Leaderboard" to="." method="_on_leaderboard_pressed"]
+[connection signal="animation_finished" from="CutsceneAnimationPlayer" to="." method="_on_cutscene_animation_player_animation_finished"]
 [connection signal="finished" from="MainMenuBGM" to="." method="_on_main_menu_bgm_finished"]

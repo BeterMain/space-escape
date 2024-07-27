@@ -18,8 +18,6 @@ const DUG = preload("res://Enemies/Bosses/dug.tscn")
 const THEODORE = preload("res://Enemies/Bosses/theodore.tscn")
 const ANDHRIMNIR = preload("res://Enemies/Bosses/andhrimnir.tscn")
 
-
-
 # Onready vars
 @onready var full_ui = $FullUI
 @onready var distance_txt = $FullUI/Control/DistanceTxt
@@ -35,6 +33,7 @@ const ANDHRIMNIR = preload("res://Enemies/Bosses/andhrimnir.tscn")
 
 @onready var spawner = $SubViewportContainer/SubViewport/Spawner
 @onready var animation_player = $AnimationPlayer
+@onready var bg_animation_player = $BGAnimationPlayer
 @onready var player = $SubViewportContainer/SubViewport/Player
 @onready var input_timer = $SubViewportContainer/SubViewport/InputTimer
 @onready var code_inputs = $FullUI/Control/CodeInputs
@@ -133,8 +132,13 @@ func _process(delta):
 				play_sfx(INPUT_GATHERED)
 				
 			code_inputs.text = inputs
+			# Check for match
 			if inputs == Supervisor.code_key:
 				player_win()
+				
+			# Check for no match based on length of input
+			if len(inputs) > 1 and inputs != Supervisor.code_key.erase(inputs.length(), Supervisor.code_key.length()):
+				can_input_code = false
 		else:
 			if input_timer.time_left != 0 and not matched:
 				play_sfx(FAIL_INPUT)
@@ -143,20 +147,21 @@ func _process(delta):
 				bgm.restart_bgm()
 				input_timer.stop()
 				animation_player.play("normal_speed")
+				bg_animation_player.play("normal_speed")
 				
 			# Run level
 			if not stop_level:
 				run_level(delta)
 	else:
 		if not boss_started:
-			
 			# Play boss bgm
 			bgm.stop()
 			bgm.stream = SHOWDOWN
 			bgm.play()
 			
 			# Change scene for boss
-			space_particles.speed_scale = 0.75
+			animation_player.play("boss_speed")
+			bg_animation_player.play("boss_speed")
 			
 			spawner.clear_obstacles()
 			spawner.boss_activated()
@@ -178,11 +183,11 @@ func _process(delta):
 				
 				ANDHRIMNIR:
 					spawn_andhrimnir()
-
+	
 # Boss funcs
 func start_level():
 	target += growth_offset
-	distance = target * Supervisor.distance_skip
+	distance += growth_offset * Supervisor.distance_skip
 	distance_multiplier = 0.5
 	boss_started = false
 	stop_abilities()
@@ -190,6 +195,7 @@ func start_level():
 	player.unlock_movement()
 	bgm.restart_bgm()
 	animation_player.play("normal_speed")
+	bg_animation_player.play("normal_speed")
 
 func player_win():
 	can_input_code = false
@@ -291,6 +297,7 @@ func reset(player_dead=false):
 	player.lock_movement()
 	
 	animation_player.play("to_default")
+	bg_animation_player.play("default")
 	if not player_dead:
 		$SubViewportContainer/SubViewport/WaitTimer.start()
 		Supervisor.set_distance(distance)
@@ -366,6 +373,7 @@ func _on_input_timer_timeout():
 	play_sfx(FAIL_INPUT)
 	bgm.restart_bgm()
 	animation_player.play("normal_speed")
+	bg_animation_player.play("normal_speed")
 	
 
 # Event manager funcs

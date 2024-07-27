@@ -41,6 +41,7 @@ func set_is_paused(value):
 	visible = is_paused
 	
 	animation_player.play("default")
+	animation_player.play("glow")
 
 func play_sfx(sound):
 	sfx.stop()

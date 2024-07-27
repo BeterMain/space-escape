@@ -61,6 +61,10 @@ func _process(_delta):
 		sfx.stream = SELECT
 		sfx.play()
 	
+	if Input.is_action_just_pressed("test"):
+		Supervisor.current_cash += 5000
+		update_text()
+	
 	# Handle BGM
 	if upgrade_bgm.volume_db < -0.95 and not exiting:
 		upgrade_bgm.volume_db += 0.1

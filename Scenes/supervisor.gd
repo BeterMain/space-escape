@@ -43,7 +43,7 @@ var code_key = ""
 var num_code_inputs = 12
 var code_collected = ""
 
-var version = 0.5
+var version = 0.9
 var winner = false
 
 # Debug/Setting vars
@@ -186,17 +186,19 @@ func check_upgrades():
 	match health_level:
 		1: 
 			# increase base health to 5
-			PlayerStats.max_health += 2
+			PlayerStats.max_health = 5 
 			health_next_cost = 2000
 		2: 
 			# Increase base health to 8
-			PlayerStats.max_health += 3
+			PlayerStats.max_health = 8
 			health_next_cost = 2500
 		3:
 			# Increase base health to 10 and increase speed by 1.3x
-			PlayerStats.max_health += 2
+			PlayerStats.max_health = 10
 			health_next_cost = 0
 			health_buff_activated = true
+	
+	PlayerStats.health = PlayerStats.max_health
 
 	# Check distance skip
 	match distance_level:
@@ -275,15 +277,15 @@ func upgrade_health():
 		match health_level:
 			1: 
 				# increase base health to 5
-				PlayerStats.max_health += 2
+				PlayerStats.max_health = 5
 				health_next_cost = 2000
 			2: 
 				# Increase base health to 8
-				PlayerStats.max_health += 3
+				PlayerStats.max_health = 8
 				health_next_cost = 3000
 			3:
 				# Increase base health to 10 and increase speed by 1.3x
-				PlayerStats.max_health += 2
+				PlayerStats.max_health = 10
 				health_next_cost = 0
 				health_buff_activated = true
 		

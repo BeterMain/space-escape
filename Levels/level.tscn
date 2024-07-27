@@ -1,14 +1,16 @@
-[gd_scene load_steps=24 format=3 uid="uid://tymlmi1p4osd"]
+[gd_scene load_steps=29 format=3 uid="uid://tymlmi1p4osd"]
 
 [ext_resource type="PackedScene" uid="uid://ctbeb5ifp5mq2" path="res://Player/player.tscn" id="1_3yf6k"]
 [ext_resource type="Script" path="res://Levels/level.gd" id="1_psk07"]
 [ext_resource type="PackedScene" uid="uid://bns77qw20tdh4" path="res://Obstacles/wall.tscn" id="2_0p6kc"]
+[ext_resource type="Texture2D" uid="uid://j3ab2oih0pdu" path="res://Levels/space_bg.png" id="2_aebb8"]
 [ext_resource type="PackedScene" uid="uid://dgqsn6rnymrcx" path="res://Levels/events_manager.tscn" id="3_4xyvg"]
 [ext_resource type="PackedScene" uid="uid://bhsd35x7acp4l" path="res://Obstacles/spawner.tscn" id="3_rw6yj"]
 [ext_resource type="PackedScene" uid="uid://cy6wo7pg16uxc" path="res://Pickups/powerup_manager.tscn" id="5_wrm17"]
 [ext_resource type="PackedScene" uid="uid://tqcjinx2742s" path="res://UI/full_ui.tscn" id="6_cs6af"]
 [ext_resource type="PackedScene" uid="uid://dyvoetwgwu4wq" path="res://Obstacles/obstacle_pit.tscn" id="7_myw4h"]
 [ext_resource type="PackedScene" uid="uid://b3qwbd7t6r8k3" path="res://Audio/BGM/bgm.tscn" id="9_g5rly"]
+[ext_resource type="PackedScene" uid="uid://db438yjhqjuwr" path="res://Levels/tutorial_message.tscn" id="9_p1mhs"]
 [ext_resource type="AudioStream" uid="uid://p3p3syow8isq" path="res://Audio/SFXs/UI/failInput.wav" id="9_wennb"]
 [ext_resource type="AudioStream" uid="uid://qgaroea5g71v" path="res://Audio/SFXs/Bosses/theodoreWin.mp3" id="11_enk1q"]
 
@@ -16,6 +18,14 @@
 background_mode = 1
 background_color = Color(0.152941, 0.152941, 0.152941, 1)
 fog_light_color = Color(0.513726, 0.54902, 0.603922, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yigyw"]
+albedo_texture = ExtResource("2_aebb8")
+uv1_scale = Vector3(2, 2, 2)
+
+[sub_resource type="QuadMesh" id="QuadMesh_xmvv7"]
+material = SubResource("StandardMaterial3D_yigyw")
+size = Vector2(2, 2)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0nvdb"]
 emission_shape = 3
@@ -30,193 +40,91 @@ linear_accel_max = 10.0
 scale_min = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3jw4u"]
+albedo_color = Color(0.694118, 0.313726, 0.160784, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_yh5cb"]
 material = SubResource("StandardMaterial3D_3jw4u")
 radius = 0.025
 height = 0.25
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l0fay"]
-albedo_color = Color(0, 0, 0, 1)
-metallic = 1.0
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w8peq"]
+billboard_mode = 1
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_idmgp"]
-material = SubResource("StandardMaterial3D_l0fay")
+[sub_resource type="TextMesh" id="TextMesh_ckcsm"]
+material = SubResource("StandardMaterial3D_w8peq")
+
+[sub_resource type="TextMesh" id="TextMesh_6yruh"]
+material = SubResource("StandardMaterial3D_w8peq")
 
 [sub_resource type="Animation" id="Animation_nhclg"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SubViewportContainer/SubViewport/SpaceParticles:draw_pass_1:radius")
+tracks/0/path = NodePath("SubViewportContainer/SubViewport/SpaceBG:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.001),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.025]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("SubViewportContainer/SubViewport/SpaceParticles:draw_pass_1:height")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.25]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("SubViewportContainer/SubViewport/SpaceParticles:speed_scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.5]
+"values": [Vector3(-4.15793, -0.76998, -6.50827)]
 }
 
 [sub_resource type="Animation" id="Animation_yienm"]
 resource_name = "boss_speed"
-length = 2.0
+length = 5.0
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SubViewportContainer/SubViewport/SpaceParticles:speed_scale")
+tracks/0/path = NodePath("SubViewportContainer/SubViewport/SpaceBG:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 2),
+"times": PackedFloat32Array(0, 5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [2.0, 0.75]
+"values": [Vector3(-4.15793, -0.76998, -6.50827), Vector3(-4.15793, -0.76998, 3.4881)]
 }
 
 [sub_resource type="Animation" id="Animation_i2sjd"]
 resource_name = "default"
-length = 0.1
+length = 8.0
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SubViewportContainer/SubViewport/SpaceParticles:speed_scale")
+tracks/0/path = NodePath("SubViewportContainer/SubViewport/SpaceBG:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 8),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.5]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("SubViewportContainer/SubViewport/SpaceParticles:draw_pass_1:radius")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.063]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("SubViewportContainer/SubViewport/SpaceParticles:draw_pass_1:height")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.125]
+"values": [Vector3(-4.15793, -0.76998, -6.50827), Vector3(-4.15793, -0.76998, 3.4881)]
 }
 
 [sub_resource type="Animation" id="Animation_qms42"]
 resource_name = "normal_speed"
-length = 2.0
+length = 3.0
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SubViewportContainer/SubViewport/SpaceParticles:draw_pass_1:radius")
+tracks/0/path = NodePath("SubViewportContainer/SubViewport/SpaceBG:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 2),
+"times": PackedFloat32Array(0, 3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.063, 0.025]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("SubViewportContainer/SubViewport/SpaceParticles:draw_pass_1:height")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.125, 0.25]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("SubViewportContainer/SubViewport/SpaceParticles:speed_scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.5, 2.0]
+"values": [Vector3(-4.15793, -0.76998, -6.50827), Vector3(-4.15793, -0.76998, 3.4881)]
 }
 
 [sub_resource type="Animation" id="Animation_nuhgq"]
 resource_name = "to_default"
 length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SubViewportContainer/SubViewport/SpaceParticles:draw_pass_1:radius")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.025, 0.063]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("SubViewportContainer/SubViewport/SpaceParticles:draw_pass_1:height")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.25, 0.125]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("SubViewportContainer/SubViewport/SpaceParticles:speed_scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [2.0, 0.5]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0jta5"]
 _data = {
@@ -251,13 +159,17 @@ render_target_update_mode = 4
 [node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
 environment = SubResource("Environment_wixsa")
 
+[node name="SpaceBG" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(10, 0, 0, 0, -4.37114e-07, 10, 0, -10, -4.37114e-07, -4.15793, -0.76998, -6.50827)
+mesh = SubResource("QuadMesh_xmvv7")
+
 [node name="SpaceParticles" type="GPUParticles3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.981184, -8.48282)
 emitting = false
 amount = 30
 lifetime = 2.01
 preprocess = 6.06
-speed_scale = 0.5
+speed_scale = 2.0
 randomness = 1.0
 local_coords = true
 draw_order = 3
@@ -273,18 +185,13 @@ projection = 1
 current = true
 fov = 73.2612
 size = 5.0
-far = 237.11
+far = 25.28
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(0.999974, 0.00682224, -0.0022082, -0.00163984, 0.517353, 0.855771, 0.00698069, -0.855745, 0.517351, 0, 6.03358, 1.76825)
 light_volumetric_fog_energy = 0.0
 directional_shadow_mode = 0
 sky_mode = 1
-
-[node name="SpaceBG" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(15.0889, 0, 0, 0, 1, 0, 0, 0, 11.1699, 0, -1.3384, 0.960543)
-mesh = SubResource("PlaneMesh_idmgp")
-skeleton = NodePath("../../..")
 
 [node name="Spawner" parent="SubViewportContainer/SubViewport" instance=ExtResource("3_rw6yj")]
 
@@ -314,14 +221,17 @@ visible = false
 
 [node name="B_ObstaclePit" parent="SubViewportContainer/SubViewport/ObstaclePits" instance=ExtResource("7_myw4h")]
 transform = Transform3D(18.6393, 0, 0, 0, 9.86784, 0, 0, 0, 1.0212, 0, 0, 3.49482)
+layers = 0
 skeleton = NodePath("../../../..")
 
 [node name="B_ObstaclePit2" parent="SubViewportContainer/SubViewport/ObstaclePits" instance=ExtResource("7_myw4h")]
 transform = Transform3D(-9.64769e-07, 0, 1.0212, 0, 9.86784, 0, -22.0714, 0, -4.46381e-08, 9.36983, 0, -5.36322)
+layers = 0
 skeleton = NodePath("../../../..")
 
 [node name="L_ObstaclePit" parent="SubViewportContainer/SubViewport/ObstaclePits" instance=ExtResource("7_myw4h")]
 transform = Transform3D(-9.67958e-07, 0, 1.0212, 0, 9.86784, 0, -22.1443, 0, -4.46381e-08, -8.42555, 0, -5.27476)
+layers = 0
 skeleton = NodePath("../../../..")
 
 [node name="ProjectilePit" parent="SubViewportContainer/SubViewport" instance=ExtResource("7_myw4h")]
@@ -343,6 +253,27 @@ autostart = true
 [node name="DeathTimer" type="Timer" parent="SubViewportContainer/SubViewport"]
 wait_time = 2.0
 one_shot = true
+
+[node name="Messages" type="Node" parent="."]
+
+[node name="MoveMessage" parent="Messages" instance=ExtResource("9_p1mhs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.86709, -0.503499, -8.54996)
+SPEED = 80
+text = "WASD to Move"
+
+[node name="Message" parent="Messages/MoveMessage" index="0"]
+mesh = SubResource("TextMesh_ckcsm")
+
+[node name="ShootMessage" parent="Messages" instance=ExtResource("9_p1mhs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0856247, -0.469262, -10.2052)
+text = "K/ L/  R1/ RB to Shoot"
+
+[node name="Message" parent="Messages/ShootMessage" index="0"]
+mesh = SubResource("TextMesh_6yruh")
+
+[node name="DodgeMessage" parent="Messages" instance=ExtResource("9_p1mhs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.36407, -0.568438, -10.8344)
+text = "L-Shift/ L1/ LB to Dodge"
 
 [node name="BossSpawnLoc" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15333, 0, -4.98554)
@@ -368,6 +299,12 @@ libraries = {
 }
 autoplay = "default"
 
+[node name="BGAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0jta5")
+}
+autoplay = "default"
+
 [connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
 [connection signal="all_aliens" from="SubViewportContainer/SubViewport/EventsManager" to="." method="_on_events_manager_all_aliens"]
 [connection signal="asteriod_belt" from="SubViewportContainer/SubViewport/EventsManager" to="." method="_on_events_manager_asteriod_belt"]
@@ -379,6 +316,10 @@ autoplay = "default"
 [connection signal="timeout" from="SubViewportContainer/SubViewport/InputTimer" to="." method="_on_input_timer_timeout"]
 [connection signal="timeout" from="SubViewportContainer/SubViewport/DeathTimer" to="." method="_on_death_timer_timeout"]
 
+[editable path="Messages/MoveMessage"]
+[editable path="Messages/MoveMessage/HurtBox"]
+[editable path="Messages/ShootMessage"]
+[editable path="Messages/ShootMessage/HurtBox"]
 [editable path="FullUI"]
 [editable path="FullUI/Control/PlayerHealthbar"]
 [editable path="FullUI/Control/BoostBar"]

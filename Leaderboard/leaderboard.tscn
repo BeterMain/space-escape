@@ -1,0 +1,212 @@
+[gd_scene load_steps=12 format=3 uid="uid://csvn4kc7vmyvl"]
+
+[ext_resource type="Script" path="res://Leaderboard/LeaderboardFunctions.gd" id="1_gerb4"]
+[ext_resource type="Script" path="res://Leaderboard/leaderboard.gd" id="1_vtn4l"]
+[ext_resource type="Theme" uid="uid://ckunpus3gip5s" path="res://Leaderboard/leaderboard_theme.tres" id="2_cjls2"]
+[ext_resource type="FontFile" uid="uid://dc37pd247h0sh" path="res://UI/Font/Jumpers3DItalic-G33nm.otf" id="3_f7555"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wn2cu"]
+font = ExtResource("3_f7555")
+font_size = 100
+
+[sub_resource type="LabelSettings" id="LabelSettings_enwse"]
+font_size = 55
+font_color = Color(1, 0.309804, 0.290196, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w2kvx"]
+bg_color = Color(0.109804, 0.109804, 0.109804, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+shadow_color = Color(0.913725, 0.913725, 0.913725, 0.6)
+shadow_size = 2
+shadow_offset = Vector2(1, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_tk6rn"]
+font_size = 55
+font_color = Color(1, 1, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_bt2pk"]
+font_size = 50
+
+[sub_resource type="LabelSettings" id="LabelSettings_y58an"]
+font_size = 50
+
+[sub_resource type="LabelSettings" id="LabelSettings_06m2e"]
+font_size = 50
+font_color = Color(1, 0, 0, 1)
+
+[node name="Leaderboard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vtn4l")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_cjls2")
+color = Color(0.12549, 0.12549, 0.12549, 0.666667)
+
+[node name="BackBtn" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 56.0
+offset_right = 258.0
+offset_bottom = 133.0
+focus_neighbor_right = NodePath("../HBoxContainer/NameSubmittion/NameTextEdit")
+theme = ExtResource("2_cjls2")
+theme_override_font_sizes/font_size = 50
+text = "Back"
+
+[node name="TitleTxt" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -463.0
+offset_top = 120.0
+offset_right = 485.0
+offset_bottom = 257.0
+grow_horizontal = 2
+theme = ExtResource("2_cjls2")
+text = "Player Leaderboard"
+label_settings = SubResource("LabelSettings_wn2cu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WelcomeText" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -142.0
+offset_top = 257.0
+offset_right = 103.0
+offset_bottom = 394.0
+grow_horizontal = 2
+theme = ExtResource("2_cjls2")
+text = "Welcome"
+label_settings = SubResource("LabelSettings_enwse")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -850.0
+offset_top = -118.0
+offset_right = 850.0
+offset_bottom = 482.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_cjls2")
+theme_override_constants/separation = 250
+
+[node name="Panel" type="Panel" parent="Control/HBoxContainer"]
+custom_minimum_size = Vector2(950, 200)
+layout_mode = 2
+theme = ExtResource("2_cjls2")
+theme_override_styles/panel = SubResource("StyleBoxFlat_w2kvx")
+
+[node name="Table" type="VBoxContainer" parent="Control/HBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 18.0
+offset_right = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_cjls2")
+
+[node name="TableTitle" type="Label" parent="Control/HBoxContainer/Panel/Table"]
+layout_mode = 2
+text = "Top 5 Players"
+label_settings = SubResource("LabelSettings_tk6rn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TableHeader" type="Label" parent="Control/HBoxContainer/Panel/Table"]
+layout_mode = 2
+theme = ExtResource("2_cjls2")
+text = "Rank | Player | Distance  "
+label_settings = SubResource("LabelSettings_bt2pk")
+horizontal_alignment = 3
+vertical_alignment = 1
+
+[node name="Info" type="Label" parent="Control/HBoxContainer/Panel/Table"]
+layout_mode = 2
+theme = ExtResource("2_cjls2")
+text = "1. ooo  ??
+2. ooo  ??
+3. ooo  ??
+4. ooo  ??
+5. ooo  ??
+..."
+label_settings = SubResource("LabelSettings_y58an")
+horizontal_alignment = 3
+vertical_alignment = 1
+
+[node name="NameSubmittion" type="VBoxContainer" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("2_cjls2")
+theme_override_constants/separation = 50
+
+[node name="ErrorTxt" type="Label" parent="Control/HBoxContainer/NameSubmittion"]
+layout_mode = 2
+theme = ExtResource("2_cjls2")
+label_settings = SubResource("LabelSettings_06m2e")
+vertical_alignment = 1
+
+[node name="NameTextEdit" type="TextEdit" parent="Control/HBoxContainer/NameSubmittion"]
+custom_minimum_size = Vector2(550, 150)
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../SubmitBtn")
+theme = ExtResource("2_cjls2")
+theme_override_font_sizes/font_size = 50
+placeholder_text = "Enter New 3 Letter Name Here"
+wrap_mode = 1
+caret_blink = true
+
+[node name="SubmitBtn" type="Button" parent="Control/HBoxContainer/NameSubmittion"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../NameTextEdit")
+focus_neighbor_bottom = NodePath("../../../BackBtn")
+theme = ExtResource("2_cjls2")
+theme_override_font_sizes/font_size = 50
+text = "Submit Name"
+
+[node name="Functions" type="Node" parent="."]
+script = ExtResource("1_gerb4")
+
+[node name="SFX" type="AudioStreamPlayer" parent="."]
+
+[connection signal="pressed" from="Control/BackBtn" to="." method="_on_back_btn_pressed"]
+[connection signal="pressed" from="Control/HBoxContainer/NameSubmittion/SubmitBtn" to="." method="_on_submit_btn_pressed"]
+[connection signal="error" from="Functions" to="." method="_on_functions_error"]
+[connection signal="leaderboard_changed" from="Functions" to="." method="_on_functions_leaderboard_changed"]
+[connection signal="player_name_changed" from="Functions" to="." method="_on_functions_player_name_changed"]

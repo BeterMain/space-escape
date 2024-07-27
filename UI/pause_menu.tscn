@@ -1,7 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://cdnenomdavhgh"]
+[gd_scene load_steps=13 format=3 uid="uid://cdnenomdavhgh"]
 
 [ext_resource type="Script" path="res://UI/pause_menu.gd" id="1_ag423"]
 [ext_resource type="PackedScene" uid="uid://bihym4ymtm4m5" path="res://UI/settings_menu.tscn" id="2_8523o"]
+[ext_resource type="Theme" uid="uid://den0jy5apluvv" path="res://UI/main_menu_theme.tres" id="2_oavik"]
+[ext_resource type="FontFile" uid="uid://dc37pd247h0sh" path="res://UI/Font/Jumpers3DItalic-G33nm.otf" id="3_3s0j2"]
 
 [sub_resource type="Animation" id="Animation_itnub"]
 length = 0.001
@@ -113,6 +115,18 @@ tracks/8/keys = {
 "update": 0,
 "values": [Vector2(331, 426)]
 }
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("PausedTxt:theme_override_colors/font_color")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_piaxb"]
 resource_name = "default"
@@ -163,7 +177,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [30]
+"values": [50]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -187,7 +201,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(72, 50)]
+"values": [Vector2(234, 50)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -199,7 +213,7 @@ tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [30]
+"values": [50]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -450,6 +464,23 @@ tracks/8/keys = {
 "values": [20, 30]
 }
 
+[sub_resource type="Animation" id="Animation_0f1fj"]
+resource_name = "glow"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PausedTxt:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 0, 1), Color(1, 0, 0, 1), Color(0.333333, 0.333333, 0, 1), Color(0.247059, 0.0823529, 0, 1), Color(0.580392, 0, 0, 1), Color(1, 1, 0, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_1641t"]
 resource_name = "to_main_menu"
 length = 0.5
@@ -680,6 +711,7 @@ _data = {
 "default": SubResource("Animation_piaxb"),
 "from_main_menu": SubResource("Animation_2ukv0"),
 "from_quit": SubResource("Animation_yg467"),
+"glow": SubResource("Animation_0f1fj"),
 "to_main_menu": SubResource("Animation_1641t"),
 "to_quit": SubResource("Animation_6y6w8")
 }
@@ -706,9 +738,13 @@ color = Color(0.176471, 0.176471, 0.176471, 0.603922)
 metadata/_edit_lock_ = true
 
 [node name="Buttons" type="Control" parent="."]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="ResumeBtn" type="Button" parent="Buttons"]
 layout_mode = 1
@@ -717,15 +753,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 834.0
-offset_top = 596.0
-offset_right = 1191.0
-offset_bottom = 728.0
+offset_left = -126.0
+offset_top = 56.0
+offset_right = 231.0
+offset_bottom = 188.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_neighbor_left = NodePath("../MainMenuBtn")
 focus_neighbor_right = NodePath("../SettingsBtn")
-mouse_filter = 2
+theme = ExtResource("2_oavik")
 theme_override_font_sizes/font_size = 90
 text = "Resume"
 flat = true
@@ -737,33 +773,34 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 331.0
-offset_top = 426.0
-offset_right = 597.0
-offset_bottom = 476.0
+offset_left = -629.0
+offset_top = -114.0
+offset_right = -367.0
+offset_bottom = -64.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_neighbor_right = NodePath("../ResumeBtn")
-mouse_filter = 2
+theme = ExtResource("2_oavik")
 theme_override_font_sizes/font_size = 30
 text = "To Upgrade Menu"
 flat = true
 
 [node name="SettingsBtn" type="Button" parent="Buttons"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 1475.0
-offset_top = 426.0
-offset_right = 1600.0
-offset_bottom = 476.0
+offset_left = 515.0
+offset_top = -114.0
+offset_right = 657.0
+offset_bottom = -64.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_neighbor_left = NodePath("../ResumeBtn")
-mouse_filter = 2
+theme = ExtResource("2_oavik")
 theme_override_font_sizes/font_size = 30
 text = "Settings"
 flat = true
@@ -792,14 +829,16 @@ vertical_alignment = 1
 
 [node name="PausedTxt" type="Label" parent="."]
 layout_mode = 0
-offset_left = 834.0
-offset_top = 367.0
-offset_right = 1186.0
-offset_bottom = 504.0
+offset_left = 720.0
+offset_top = 219.0
+offset_right = 1314.0
+offset_bottom = 356.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_y = -7
-theme_override_font_sizes/font_size = 100
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = -2
+theme_override_fonts/font = ExtResource("3_3s0j2")
+theme_override_font_sizes/font_size = 150
 text = "Paused"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -808,7 +847,7 @@ vertical_alignment = 1
 libraries = {
 "": SubResource("AnimationLibrary_lmb0w")
 }
-autoplay = "default"
+autoplay = "glow"
 
 [node name="SFX" type="AudioStreamPlayer" parent="."]
 bus = &"Sound Effects"
