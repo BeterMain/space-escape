@@ -38,6 +38,7 @@ font_size = 50
 font_color = Color(1, 0, 0, 1)
 
 [node name="Leaderboard" type="Control"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -159,11 +160,11 @@ vertical_alignment = 1
 [node name="Info" type="Label" parent="Control/HBoxContainer/Panel/Table"]
 layout_mode = 2
 theme = ExtResource("2_cjls2")
-text = "1. ooo  ??
-2. ooo  ??
-3. ooo  ??
-4. ooo  ??
-5. ooo  ??
+text = "1. ...  ??
+2. ...  ??
+3. ...  ??
+4. ...  ??
+5. ...  ??
 ..."
 label_settings = SubResource("LabelSettings_y58an")
 horizontal_alignment = 3

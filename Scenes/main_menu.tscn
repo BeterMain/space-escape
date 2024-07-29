@@ -738,7 +738,6 @@ draw_pass_1 = SubResource("SphereMesh_yhiah")
 visible = false
 
 [node name="Leaderboard" parent="DebugUI" instance=ExtResource("5_l6t5s")]
-visible = false
 
 [node name="UI" type="CanvasLayer" parent="DebugUI"]
 
@@ -834,7 +833,7 @@ offset_top = -35.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 25
-text = "v0.1"
+text = "v1.0"
 horizontal_alignment = 1
 vertical_alignment = 1
 

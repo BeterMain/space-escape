@@ -43,7 +43,7 @@ var code_key = ""
 var num_code_inputs = 12
 var code_collected = ""
 
-var version = 0.9
+var version = 1.0
 var winner = false
 
 # Debug/Setting vars
@@ -57,6 +57,7 @@ var sfx_db = AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Sound Effe
 var vl_db = AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Voice Lines"))
 
 func _ready():
+	
 	Save.data_loaded.connect(load_all)
 
 func set_master_db(value):

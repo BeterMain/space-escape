@@ -21,6 +21,9 @@ signal hiding
 func show_self():
 	visible = true
 	functions._upload_score(Supervisor.highscore_distance)
+	if functions.authentication_failed:
+		welcome_text.text = "Leaderboard Servers Are Under Maintenance...\nScores will not be saved...\nSorry"
+		submit_btn.disabled = true
 	back_btn.grab_focus()
 
 func hide_self():

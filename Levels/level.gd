@@ -21,7 +21,7 @@ const ANDHRIMNIR = preload("res://Enemies/Bosses/andhrimnir.tscn")
 # Onready vars
 @onready var full_ui = $FullUI
 @onready var distance_txt = $FullUI/Control/DistanceTxt
-@onready var upgrade_btn = $FullUI/PauseMenu/Buttons/MainMenuBtn
+@onready var upgrade_btn = $FullUI/PauseMenu/MainMenuBtn
 @onready var settings_menu = $FullUI/PauseMenu/SettingsMenu
 
 @onready var space_particles = $SubViewportContainer/SubViewport/SpaceParticles

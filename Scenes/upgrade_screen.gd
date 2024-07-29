@@ -44,6 +44,10 @@ func _ready():
 	events_manager.pick_random_event()
 	
 	update_text()
+	
+	if upgrade_bgm.volume_db > 3:
+		upgrade_bgm.volume_db = 3
+	
 	if Supervisor.blaster_unlocked:
 		blaster_txt.text = "Rainbow Pizza Blaster"
 		blaster_cost_txt.text = "OBTAINED"
@@ -60,10 +64,6 @@ func _process(_delta):
 	if Input.is_action_just_pressed("ui_right") or Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_down"):
 		sfx.stream = SELECT
 		sfx.play()
-	
-	if Input.is_action_just_pressed("test"):
-		Supervisor.current_cash += 5000
-		update_text()
 	
 	# Handle BGM
 	if upgrade_bgm.volume_db < -0.95 and not exiting:

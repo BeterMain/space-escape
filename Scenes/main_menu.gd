@@ -23,7 +23,6 @@ var opening_finished = false
 
 func _ready():
 	randomize()
-	version_txt.text = "v" + str(Supervisor.version)
 	
 	winner_pivot.visible = Supervisor.winner
 
@@ -31,7 +30,7 @@ func _ready():
 
 func _process(_delta):
 	# Raise volume of bgm when entering the scene
-	if main_menu_bgm.volume_db < -0.95 and not exiting:
+	if main_menu_bgm.volume_db < -10 and not exiting:
 		main_menu_bgm.volume_db += 0.1
 	
 	

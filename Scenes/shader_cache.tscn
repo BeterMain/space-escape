@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cfayr4kahbxuw"]
+[gd_scene load_steps=26 format=3 uid="uid://cfayr4kahbxuw"]
 
 [ext_resource type="PackedScene" uid="uid://dymj7wkj285j5" path="res://Player/bubble_shockwave.tscn" id="1_jihx7"]
 [ext_resource type="Script" path="res://Scenes/shader_cache.gd" id="1_t1rgf"]
@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://b0bekvutcnwwa" path="res://Enemies/goat.tscn" id="18_xfwbm"]
 [ext_resource type="PackedScene" uid="uid://bj1it2djv3bp0" path="res://Enemies/Bosses/vines.tscn" id="19_o72np"]
 [ext_resource type="Texture2D" uid="uid://j3ab2oih0pdu" path="res://Levels/space_bg.png" id="20_oewvq"]
+[ext_resource type="PackedScene" uid="uid://db438yjhqjuwr" path="res://Levels/tutorial_message.tscn" id="21_ysla6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dys10"]
 bg_color = Color(0.184314, 0.184314, 0.184314, 1)
@@ -150,6 +151,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -4.74567)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.82546)
 mesh = SubResource("QuadMesh_h0e4a")
+
+[node name="TutorialMessage" parent="Camera3D" instance=ExtResource("21_ysla6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.407447, 0, -1.25296)
+text = "knlnlknlnln"
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true

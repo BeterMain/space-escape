@@ -266,6 +266,7 @@ mesh = SubResource("TextMesh_ckcsm")
 
 [node name="ShootMessage" parent="Messages" instance=ExtResource("9_p1mhs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0856247, -0.469262, -10.2052)
+SPEED = 100
 text = "K/ L/  R1/ RB to Shoot"
 
 [node name="Message" parent="Messages/ShootMessage" index="0"]
@@ -273,6 +274,7 @@ mesh = SubResource("TextMesh_6yruh")
 
 [node name="DodgeMessage" parent="Messages" instance=ExtResource("9_p1mhs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.36407, -0.568438, -10.8344)
+SPEED = 100
 text = "L-Shift/ L1/ LB to Dodge"
 
 [node name="BossSpawnLoc" type="Marker3D" parent="."]

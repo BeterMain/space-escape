@@ -6,12 +6,12 @@ const SELECT = preload("res://Audio/SFXs/UI/buttonSelected.wav")
 @onready var sfx = $SFX
 
 # Onready vars
-@onready var resume_btn = $Buttons/ResumeBtn
-@onready var main_menu_btn = $Buttons/MainMenuBtn
-@onready var settings_btn = $Buttons/SettingsBtn
+@onready var resume_btn = $ResumeBtn
+@onready var main_menu_btn = $MainMenuBtn
+@onready var settings_btn = $SettingsBtn
 @onready var animation_player = $AnimationPlayer
 @onready var settings_menu = $SettingsMenu
-@onready var buttons = $Buttons
+
 @onready var hint_txt = $CodeHints/HintTxt
 
 # Vars
@@ -40,8 +40,14 @@ func set_is_paused(value):
 	get_tree().paused = is_paused
 	visible = is_paused
 	
-	animation_player.play("default")
-	animation_player.play("glow")
+	if is_paused:
+		change_buttons_visiblity(true)
+		animation_player.play("glow")
+
+func change_buttons_visiblity(value):
+	resume_btn.visible = value
+	main_menu_btn.visible = value
+	settings_btn.visible = value
 
 func play_sfx(sound):
 	sfx.stop()
@@ -61,10 +67,10 @@ func _on_main_menu_btn_pressed():
 	
 func _on_quit_btn_pressed():
 	play_sfx(PRESSED)
-	buttons.visible = false
+	change_buttons_visiblity(false)
 	settings_menu.show_self()
 	
 
 func _on_settings_menu_hiding():
 	resume_btn.grab_focus()
-	buttons.visible = true
+	change_buttons_visiblity(true)
